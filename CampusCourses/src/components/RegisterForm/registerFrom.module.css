@@ -1,0 +1,23 @@
+.registerCard{
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+    width: 40%;
+}
+
+.titleContainer{
+    justify-content: center;
+}
+
+.buttonContainer{
+    justify-content: center;
+}
+
+.textContainer{
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.nameInputsContainer{
+   justify-content: space-between;
+    align-content: center;
+    flex-wrap: wrap;
+}
