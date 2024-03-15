@@ -1,0 +1,9 @@
+.editBtn{
+    color: rgb(255, 184, 0);
+    border-color: rgb(255, 184, 0);
+    margin-right: 8px;
+}
+.editBtn:hover{
+    color: rgb(255, 184, 0);
+    border-color: rgba(255,184,0,0.49);
+}
