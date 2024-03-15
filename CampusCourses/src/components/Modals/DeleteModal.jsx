@@ -1,20 +1,32 @@
 import {Modal, Button} from 'antd'
-const DeleteModal = ({isModalOpen, setIsModalOpen, courseName}) =>{
-    const handleOk = () => {
-        //api request
-        setIsModalOpen(false);
+import {deleteGroup} from "../../API/deleteGroup.js";
+import {useState} from "react";
+const DeleteModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) =>{
+    const [loading, setLoading] = useState(false);
+    const handleOk = async() => {
+        setLoading(true)
+        const response = await deleteGroup(id)
+        setTimeout(() =>{
+            setLoading(false)
+            if(response === 200){
+                //notify
+                setIsModalOpen(false)
+                updateGroups();
+            }
+        }, 500)
     };
     const handleCancel = () => {
         setIsModalOpen(false);
     }
-
+    const footer =
+        [
+            <Button key="cancel" onClick={handleCancel}> Отменить</Button>,
+            <Button key="delete" type="primary" danger onClick={handleOk} loading={loading}> Удалить</Button>
+        ]
     return(
         <Modal open={isModalOpen} title="Удаление группы курсов"
                onCancel={handleCancel}
-            footer={[
-                <Button onClick={handleCancel}> Отменить</Button>,
-                <Button type="primary" danger onClick={handleOk}> Удалить</Button>
-            ]}>
+            footer={footer}>
             <span>{`Вы уверены, что хотите удалить группу курсов ${courseName}?`}</span>
         </Modal>
     )

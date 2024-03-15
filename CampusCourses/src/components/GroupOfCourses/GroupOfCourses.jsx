@@ -4,7 +4,7 @@ import {useState} from "react";
 import DeleteModal from "../Modals/DeleteModal.jsx";
 import EditModal from "../Modals/EditModal.jsx";
 
-const GroupOfCourses = ({ name, admin}) => {
+const GroupOfCourses = ({id, name, admin, updateGroups}) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const showEditModal = () => {
@@ -28,8 +28,10 @@ const GroupOfCourses = ({ name, admin}) => {
                     {!admin && null}
                 </Flex>
             </Card>
-            <DeleteModal  setIsModalOpen={setIsDeleteModalOpen} isModalOpen={isDeleteModalOpen} courseName={name}/>
-            <EditModal setIsModalOpen={setIsEditModalOpen} isModalOpen={isEditModalOpen} courseName={name}/>
+            <DeleteModal id={id} setIsModalOpen={setIsDeleteModalOpen} isModalOpen={isDeleteModalOpen}
+                         courseName={name} updateGroups={updateGroups}/>
+            <EditModal id={id} setIsModalOpen={setIsEditModalOpen} isModalOpen={isEditModalOpen}
+                       courseName={name} updateGroups={updateGroups}/>
         </>
     )
 }

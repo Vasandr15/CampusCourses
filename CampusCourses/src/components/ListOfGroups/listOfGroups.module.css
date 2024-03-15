@@ -1,6 +1,5 @@
 .groupsContainer {
-    width: 50%;
+    width: 100%;
     justify-content: center;
     align-items: center;
-    margin-bottom: 50px;
 }

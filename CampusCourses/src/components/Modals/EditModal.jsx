@@ -1,9 +1,21 @@
 import {Modal, Button, Input} from 'antd'
 import {useState} from "react";
-const EditModal = ({isModalOpen, setIsModalOpen, courseName}) =>{
+import {editGroup} from "../../API/editGroup.js";
+
+const EditModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) => {
     const [newCourseName, setNewCourseName] = useState(courseName);
-    const handleOk = () => {
-        //api request
+    const [loading, setLoading] = useState(false);
+    const handleOk = async () => {
+        setLoading(true)
+        const response = await editGroup(id, newCourseName)
+        setTimeout(() =>{
+            setLoading(false)
+            if(response === 200){
+                //notify
+                setIsModalOpen(false)
+                updateGroups();
+            }
+        }, 500)
         setIsModalOpen(false);
     };
     const handleCancel = () => {
@@ -13,15 +25,16 @@ const EditModal = ({isModalOpen, setIsModalOpen, courseName}) =>{
         setNewCourseName(e.target.value);
     };
 
-    return(
+    const footer = [
+        <Button key="cnacel" onClick={handleCancel}> Отменить</Button>,
+        <Button key="edit" type="primary" onClick={handleOk} loading={loading}> Изменить</Button>
+    ]
+    return (
         <Modal open={isModalOpen} title="Редактирование группы курсов"
                onCancel={handleCancel}
-               footer={[
-                   <Button onClick={handleCancel}> Отменить</Button>,
-                   <Button type="primary" onClick={handleOk}> Изменить</Button>
-               ]}>
+               footer={footer}>
             <span>Название группы курсов:</span>
-            <Input value={newCourseName} onChange={handleChange} />
+            <Input value={newCourseName} onChange={handleChange}/>
         </Modal>
     )
 }
