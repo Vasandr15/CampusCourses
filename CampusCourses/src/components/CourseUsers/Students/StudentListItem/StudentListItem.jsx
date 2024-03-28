@@ -19,7 +19,7 @@ const StudentListItem = ({student}) =>{
                 <Text type={"secondary"}>{student.email}</Text>
             </Space>
             {student.status === studentStatuses.InQueue() && (
-                <InQueueStudent id={student.id}/>
+                <InQueueStudent studentId={student.id}/>
             )}
             {student.status === studentStatuses.Accepted() && (
                 <AcceptedStudent id={student.id} finalResult={student.finalResult} midtermResult={student.midtermResult}/>

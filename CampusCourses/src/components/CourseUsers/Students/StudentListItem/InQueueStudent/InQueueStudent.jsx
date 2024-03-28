@@ -2,7 +2,7 @@ import {Button, Popconfirm, Space} from "antd";
 import {postChangeStudentStatus} from "../../../../../API/postChangeStudentStatus.js";
 import {studentStatuses} from "../../../../../consts/StudentStatuses.js";
 
-const InQueueStudent = (studentId) =>{
+const InQueueStudent = ({studentId}) =>{
     const courseId = localStorage.getItem('currentCourseId')
     const acceptStudent = async () =>{
         let response = await postChangeStudentStatus(courseId, studentId, studentStatuses.Accepted())
