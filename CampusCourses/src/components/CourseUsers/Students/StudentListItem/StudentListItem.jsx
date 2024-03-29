@@ -11,7 +11,7 @@ const StudentListItem = ({student}) =>{
     return(
         <Space className={styles.listItem}>
 
-            <Space direction={"vertical"}>
+            <Space direction={"vertical"} wrap>
                 <Text>{student.name}</Text>
                 <Text type={"secondary"}>Статус -
                     <Text style={{color: getStudentStatusColor(student.status)}}> {getStudentStatus(student.status)}</Text>
@@ -22,7 +22,7 @@ const StudentListItem = ({student}) =>{
                 <InQueueStudent studentId={student.id}/>
             )}
             {student.status === studentStatuses.Accepted() && (
-                <AcceptedStudent id={student.id} finalResult={student.finalResult} midtermResult={student.midtermResult}/>
+                <AcceptedStudent name={student.name} id={student.id} finalResult={student.finalResult} midtermResult={student.midtermResult}/>
             )}
         </Space>
     )

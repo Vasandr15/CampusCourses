@@ -1,12 +1,21 @@
 import {Button, List, Space, Tag, Typography} from "antd";
 import styles from "../Teachers/teachers.module.css";
+import {useState} from "react";
+import AddTeacherModal from "../../Modals/AddTeacherModal/AddTeacherModal.jsx";
 
 const {Text} = Typography
 const Teachers = ({teachers}) => {
+
+    const [isModalOpen, setModalOpen] = useState(false)
+
+    const  handleClick = () =>{
+        setModalOpen(true)
+    }
+
     return (
         <>
             <Space>
-                <Button type="primary">Добавить преподавателя</Button>
+                <Button type="primary" onClick={handleClick}>Добавить преподавателя</Button>
             </Space>
             <div className={styles.container}>
                 <List dataSource={teachers}
@@ -22,6 +31,7 @@ const Teachers = ({teachers}) => {
                           </List.Item>
                       )}/>
             </div>
+            <AddTeacherModal setModalOpen={setModalOpen} isModalOpen={isModalOpen}/>
         </>
     )
 }
