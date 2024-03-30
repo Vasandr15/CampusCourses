@@ -1,7 +1,7 @@
 import {Button, Popconfirm, Space} from "antd";
 import {postChangeStudentStatus} from "../../../../../API/Course/postChangeStudentStatus.js";
 import {studentStatuses} from "../../../../../consts/StudentStatuses.js";
-import {useCourse} from "../../../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../../../contexts/CourseProvider.jsx";
 
 const InQueueStudent = ({studentId}) =>{
 

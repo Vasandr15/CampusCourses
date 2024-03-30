@@ -2,10 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
-import {RegistrationPage} from "./pages/RegistrationPage/RegistrationPage.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <RegistrationPage/>
+    <App/>
   </React.StrictMode>,
 )

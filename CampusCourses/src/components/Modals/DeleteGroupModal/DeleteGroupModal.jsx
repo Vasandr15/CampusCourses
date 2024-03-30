@@ -1,7 +1,7 @@
 import {Modal, Button} from 'antd'
-import {deleteGroup} from "../../API/deleteGroup.js";
+import {deleteGroup} from "../../../API/Group/deleteGroup.js";
 import {useState} from "react";
-const DeleteModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) =>{
+const DeleteGroupModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) =>{
     const [loading, setLoading] = useState(false);
     const handleOk = async() => {
         setLoading(true)
@@ -32,4 +32,4 @@ const DeleteModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}
     )
 }
 
-export default DeleteModal;
+export default DeleteGroupModal;

@@ -2,7 +2,7 @@ import {Button, Modal, Input, Space, Typography, Switch} from "antd";
 import {useState} from "react";
 import styles from '../CreateNotificationModal/statusEditModal.module.css'
 import {postCourseNotification} from "../../../API/Course/postCourseNotification.js";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const {TextArea} = Input
 const {Text} = Typography

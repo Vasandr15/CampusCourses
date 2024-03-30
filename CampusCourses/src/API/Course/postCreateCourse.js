@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createCourse = async (id, data) =>{
+export const postCreateCourse = async (id, data) =>{
     try {
         let response = await axios.post(`https://camp-courses.api.kreosoft.space/groups/${id}`,
             data, {

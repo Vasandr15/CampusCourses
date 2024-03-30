@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const editGroup = async (id, name) =>{
+export const putEditGroup = async (id, name) =>{
 
     const body = {"name" : name}
 

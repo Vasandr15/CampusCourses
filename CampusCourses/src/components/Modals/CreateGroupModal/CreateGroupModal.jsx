@@ -1,14 +1,14 @@
 import { Modal, Button, Input } from 'antd';
 import { useState } from 'react';
-import { createGroup } from '../../API/createGroup.js';
+import { postCreateGroup } from '../../../API/Group/postCreateGroup.js';
 
-const CreateModal = ({ isModalOpen, setIsModalOpen, updateGroups }) => {
+const CreateGroupModal = ({ isModalOpen, setIsModalOpen, updateGroups }) => {
     const [loading, setLoading] = useState(false);
     const [groupName, setGroupName] = useState('');
 
     const handleOk = async () => {
         setLoading(true);
-        const response = await createGroup(groupName);
+        const response = await postCreateGroup(groupName);
         setTimeout(() => {
             setLoading(false);
             if (response) {
@@ -49,4 +49,4 @@ const CreateModal = ({ isModalOpen, setIsModalOpen, updateGroups }) => {
     );
 };
 
-export default CreateModal;
+export default CreateGroupModal;

@@ -3,7 +3,7 @@ import {Validations} from "../../consts/validationRules.js";
 import styles from './registerFrom.module.css'
 import {useState} from "react";
 import {cleanUpValues} from "../../helpers/bodyHelper.js";
-import {registerUser} from "../../API/User/registerUser.js";
+import {postRegisterUser} from "../../API/User/postRegisterUser.js";
 import locale from 'antd/es/date-picker/locale/ru_RU.js';
 import 'dayjs/locale/ru.js';
 import {InfoCircleOutlined} from "@ant-design/icons";
@@ -18,7 +18,7 @@ export const RegisterForm = () => {
         setLoading(true);
         cleanUpValues(values);
         console.log(values);
-        let data = await registerUser(values);
+        let data = await postRegisterUser(values);
         if(data){
             //add notification
             localStorage.setItem('token', data.token)

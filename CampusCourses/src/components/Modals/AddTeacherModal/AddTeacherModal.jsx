@@ -1,7 +1,7 @@
 import {Button, Modal, Select} from "antd";
 import {useState} from "react";
 import {postAddTeacher} from "../../../API/Course/postAddTeacher.js";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const AddTeacherModal = ({isModalOpen, setModalOpen}) =>{
     const {updateCourseInfo } = useCourse();

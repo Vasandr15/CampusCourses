@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const createGroup = async (name) =>{
+export const postCreateGroup = async (name) =>{
 
     const body = {"name" : name}
 

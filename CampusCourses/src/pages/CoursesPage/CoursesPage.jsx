@@ -1,6 +1,6 @@
 import {Button, Card, Flex, List, Typography} from 'antd'
 import {useEffect, useState} from "react";
-import {getCourses} from "../../API/getCourses.js";
+import {getCourses} from "../../API/Group/getCourses.js";
 import ListItem from "../../components/ListItem/ListItem.jsx";
 import styles from '../CoursesPage/courses.module.css'
 import CreateCourseModal from "../../components/CreateCourseModal/CreateCourseModal.jsx";

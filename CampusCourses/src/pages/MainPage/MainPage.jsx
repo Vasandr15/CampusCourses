@@ -1,5 +1,5 @@
 import {Typography} from "antd";
-import HeaderSection from "../components/Header/Header.jsx";
+import HeaderSection from "../../components/Header/Header.jsx";
 import styles from './main.module.css'
 const {Title} = Typography
 const MainPage = () => {

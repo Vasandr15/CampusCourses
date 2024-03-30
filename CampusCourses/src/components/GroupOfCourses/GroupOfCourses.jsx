@@ -1,8 +1,8 @@
 import {Card, Flex, Button} from 'antd'
 import styles from './group.module.css'
 import {useState} from "react";
-import DeleteModal from "../Modals/DeleteModal.jsx";
-import EditModal from "../Modals/EditModal.jsx";
+import DeleteGroupModal from "../Modals/DeleteGroupModal/DeleteGroupModal.jsx";
+import EditGroupModal from "../Modals/EditGroupModal/EditGroupModal.jsx";
 
 const GroupOfCourses = ({id, name, admin, updateGroups}) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -28,10 +28,10 @@ const GroupOfCourses = ({id, name, admin, updateGroups}) => {
                     {!admin && null}
                 </Flex>
             </Card>
-            <DeleteModal id={id} setIsModalOpen={setIsDeleteModalOpen} isModalOpen={isDeleteModalOpen}
-                         courseName={name} updateGroups={updateGroups}/>
-            <EditModal id={id} setIsModalOpen={setIsEditModalOpen} isModalOpen={isEditModalOpen}
-                       courseName={name} updateGroups={updateGroups}/>
+            <DeleteGroupModal id={id} setIsModalOpen={setIsDeleteModalOpen} isModalOpen={isDeleteModalOpen}
+                              courseName={name} updateGroups={updateGroups}/>
+            <EditGroupModal id={id} setIsModalOpen={setIsEditModalOpen} isModalOpen={isEditModalOpen}
+                            courseName={name} updateGroups={updateGroups}/>
         </>
     )
 }

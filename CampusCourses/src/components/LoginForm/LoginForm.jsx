@@ -3,7 +3,7 @@ import {LockOutlined, MailOutlined} from "@ant-design/icons";
 import {Validations} from "../../consts/validationRules.js";
 import styles from './loginForm.module.css'
 import {useState} from "react";
-import {loginUser} from "../../API/User/loginUser.js";
+import {postLoginUser} from "../../API/User/postLoginUser.js";
 import {useNotification} from "../../contexts/NotificationContext.jsx";
 
 const {Title} = Typography;
@@ -15,7 +15,7 @@ export const LoginForm = () => {
     const onFinish = async (values) => {
         setLoading(true);
         console.log(values);
-        let data = await loginUser(values);
+        let data = await postLoginUser(values);
         if(data){
             notify('success', 'Вы успешно вошли')
             localStorage.setItem('token', data.token)

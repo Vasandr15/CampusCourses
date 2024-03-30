@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import { putChangeRequirementsAndAnnotations } from "../../../API/Course/putChangeRequirementsAndAnnotations.js";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const { Text } = Typography;
 

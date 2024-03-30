@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const editProfile = async (data) => {
+export const putEditProfile = async (data) => {
     try {
         const response = await axios.put(`https://camp-courses.api.kreosoft.space/profile`, data ,{
             headers: {

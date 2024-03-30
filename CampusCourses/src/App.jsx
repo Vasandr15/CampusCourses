@@ -1,4 +1,4 @@
-import {CourseProvider} from "./CourseProvider/CourseProvider.jsx";
+import {CourseProvider} from "./contexts/CourseProvider.jsx";
 import CoursePage from "./pages/CoursePage/CoursePage.jsx";
 
 

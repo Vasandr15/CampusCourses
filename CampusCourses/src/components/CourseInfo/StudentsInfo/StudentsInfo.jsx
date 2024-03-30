@@ -1,5 +1,5 @@
 import {Col, Row, Space, Typography} from "antd";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const {Text} = Typography
 const StudentsInfo = ()=>{

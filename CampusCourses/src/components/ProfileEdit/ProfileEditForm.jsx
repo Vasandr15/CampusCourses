@@ -10,7 +10,7 @@ import moment from "moment";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from "dayjs";
 import {cleanUpValues} from "../../helpers/bodyHelper.js";
-import {editProfile} from "../../API/editProfile.js";
+import {putEditProfile} from "../../API/User/putEditProfile.js";
 dayjs.extend(customParseFormat);
 
 const { Title } = Typography;
@@ -23,7 +23,7 @@ const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }
 
     const onFinish = async (values) => {
         cleanUpValues(values);
-        let data = await editProfile(values);
+        let data = await putEditProfile(values);
         if (data){
             //notify
             setEditing(false);

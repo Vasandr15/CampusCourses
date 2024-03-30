@@ -7,7 +7,7 @@ import CourseRequirements from "../../components/CousreRequirements/CourseRequir
 import CourseUsers from "../../components/CourseUsers/CourseUsers.jsx";
 import RequirementsAndAnnotationsEditModal
     from "../../components/Modals/RequirementsAndAnnotationEditModal/RequirementsAndAnnotationsEditModal.jsx";
-import {useCourse} from "../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../contexts/CourseProvider.jsx";
 
 const {Title} = Typography
 const id = '59101733-350f-4f4c-9320-08dc4e48c3db'

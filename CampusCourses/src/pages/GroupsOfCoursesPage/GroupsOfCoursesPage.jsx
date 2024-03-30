@@ -2,10 +2,10 @@ import { Typography, Flex, Button, Card } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import styles from '../GroupsOfCoursesPage/groups.module.css';
 import ListOfGroups from '../../components/ListOfGroups/ListOfGroups.jsx';
-import { getRoles } from '../../API/getRoles.js';
+import { getRoles } from '../../API/Users/getRoles.js';
 import { useEffect, useState } from 'react';
-import CreateModal from "../../components/Modals/CreateModal.jsx";
-import {getGroupsOfCourses} from "../../API/getGroupsOfCourses.js";
+import CreateGroupModal from "../../components/Modals/CreateGroupModal/CreateGroupModal.jsx";
+import {getGroupsOfCourses} from "../../API/Group/getGroupsOfCourses.js";
 
 const { Title } = Typography;
 
@@ -66,7 +66,7 @@ const GroupsOfCoursesPage = () => {
                     <ListOfGroups admin={isAdmin} groups={groups} updateGroups={updateGroups}/>
                 </Flex>
             </Card>
-            <CreateModal isModalOpen={isCreateModalOpen} setIsModalOpen={setIsCreateModalOpen} updateGroups={updateGroups} />
+            <CreateGroupModal isModalOpen={isCreateModalOpen} setIsModalOpen={setIsCreateModalOpen} updateGroups={updateGroups} />
         </>
     );
 };

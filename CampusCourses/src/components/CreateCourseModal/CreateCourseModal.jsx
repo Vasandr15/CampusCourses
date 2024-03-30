@@ -1,10 +1,10 @@
 import { Button, DatePicker, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useEffect, useState } from "react";
 import NumericInput from "../NumericInput/NumericInput.jsx";
-import { getUsers } from "../../API/getUsers.js";
+import { getUsers } from "../../API/Users/getUsers.js";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
-import {createCourse} from "../../API/createCourse.js";
+import {postCreateCourse} from "../../API/Course/postCreateCourse.js";
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {
@@ -20,7 +20,7 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
         values.startYear = values.startYear.$y
         console.log(values);
         setLoading(true);
-        let response = await createCourse(id, values);
+        let response = await postCreateCourse(id, values);
         setTimeout(() => {
             setLoading(false);
             if (response) {

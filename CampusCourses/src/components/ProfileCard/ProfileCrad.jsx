@@ -3,7 +3,7 @@ import {Card, Row, Col, Avatar, Typography} from 'antd';
 import { UserOutlined} from '@ant-design/icons';
 import styles from './profileCard.module.css';
 import 'dayjs/locale/ru.js';
-import { getProfile } from "../../API/getProfile.js";
+import { getProfile } from "../../API/User/getProfile.js";
 import ProfileInfo from "../ProfileInfo/ProfileInfo.jsx";
 import ProfileEditForm from "../ProfileEdit/ProfileEditForm.jsx";
 

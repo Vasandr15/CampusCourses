@@ -2,7 +2,7 @@ import styles from "../StatusInfo/status.module.css";
 import {Button, Space, Typography} from "antd";
 import CourseStatusEditModal from "../../Modals/CourseStatusEditModal/CourseStatusEditModal.jsx";
 import {useState} from "react";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const {Text} = Typography
 const StatusInfo = ()=>{

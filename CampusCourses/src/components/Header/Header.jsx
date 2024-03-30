@@ -1,8 +1,8 @@
 import { Layout, Menu } from 'antd';
 import { useState, useEffect } from 'react'; // Import useState and useEffect hooks
 import styles from '../Header/header.module.css';
-import { getRoles } from '../../API/getRoles.js';
-import { getProfile } from '../../API/getProfile.js';
+import { getRoles } from '../../API/Users/getRoles.js';
+import { getProfile } from '../../API/User/getProfile.js';
 
 const { Header } = Layout;
 

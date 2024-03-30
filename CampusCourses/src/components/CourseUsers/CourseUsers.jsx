@@ -1,7 +1,7 @@
 import {Tabs} from "antd";
 import Teachers from "./Teachers/Teachers.jsx";
 import Students from "./Students/Students.jsx";
-import {useCourse} from "../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../contexts/CourseProvider.jsx";
 
 const CourseUsers = () =>{
     const { courseInfo } = useCourse();

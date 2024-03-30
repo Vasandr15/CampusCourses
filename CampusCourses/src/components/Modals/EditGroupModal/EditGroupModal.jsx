@@ -1,13 +1,13 @@
 import {Modal, Button, Input} from 'antd'
 import {useState} from "react";
-import {editGroup} from "../../API/editGroup.js";
+import {putEditGroup} from "../../../API/Group/putEditGroup.js";
 
-const EditModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) => {
+const EditGroupModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) => {
     const [newCourseName, setNewCourseName] = useState(courseName);
     const [loading, setLoading] = useState(false);
     const handleOk = async () => {
         setLoading(true)
-        const response = await editGroup(id, newCourseName)
+        const response = await putEditGroup(id, newCourseName)
         setTimeout(() =>{
             setLoading(false)
             if(response === 200){
@@ -39,4 +39,4 @@ const EditModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) 
     )
 }
 
-export default EditModal;
+export default EditGroupModal;

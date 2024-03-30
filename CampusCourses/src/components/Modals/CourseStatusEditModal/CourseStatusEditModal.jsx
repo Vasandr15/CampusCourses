@@ -1,7 +1,7 @@
 import { Button, Modal, Radio, Space } from "antd";
 import {useEffect, useState} from "react";
 import {postChangeCourseStatus} from "../../../API/Course/postChangeCourseStatus.js";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
     const { courseInfo, updateCourseInfo } = useCourse();

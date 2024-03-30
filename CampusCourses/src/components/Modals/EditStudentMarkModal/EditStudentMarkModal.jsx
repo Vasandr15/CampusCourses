@@ -4,7 +4,7 @@ import { studentMarks } from "../../../consts/StudentMarks.js";
 import { studentMarksRu } from "../../../consts/StudentMarksRu.js";
 import { postChangeStudentMark } from "../../../API/Course/postChangeStudentMark.js";
 import { getMarkType } from "../../../helpers/getMarkType.js";
-import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
+import {useCourse} from "../../../contexts/CourseProvider.jsx";
 
 const { Text } = Typography;
 
