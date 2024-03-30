@@ -1,0 +1,10 @@
+.header{
+    display: flex;
+    align-items: center;
+    color: darkgrey;
+}
+
+.mainSection{
+    color: rgb(204, 204, 204);
+    margin-right: 10px;
+}
