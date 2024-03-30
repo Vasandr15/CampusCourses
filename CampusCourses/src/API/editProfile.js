@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export const getProfile = async () => {
+export const editProfile = async (data) => {
     try {
-        const response = await axios.get(`https://camp-courses.api.kreosoft.space/profile`,{
+        const response = await axios.put(`https://camp-courses.api.kreosoft.space/profile`, data ,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
@@ -12,5 +12,4 @@ export const getProfile = async () => {
     } catch (error) {
         console.error('An error occurred:', error.response ? error.response.status : error.message);
     }
-
 }
