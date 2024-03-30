@@ -42,7 +42,6 @@ export const Validations = {
         Validation.lengthValidation(6, MIN_6_LENGTH)
 
     ],
-
     nameValidationRules : () => [
         Validation.requireRule(FILL_IN),
         Validation.inputValidation(ONLY_LETTERS_REGEX,ONLY_LETTERS_MESSAGE )
