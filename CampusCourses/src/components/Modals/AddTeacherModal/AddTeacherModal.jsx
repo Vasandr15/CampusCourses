@@ -1,9 +1,10 @@
 import {Button, Modal, Select} from "antd";
 import {useState} from "react";
 import {postAddTeacher} from "../../../API/Course/postAddTeacher.js";
+import {useCourse} from "../../../CourseProvider/CourseProvider.jsx";
 
 const AddTeacherModal = ({isModalOpen, setModalOpen}) =>{
-
+    const {updateCourseInfo } = useCourse();
     const [users, setUsers] = useState([])
     const [teacher, setTeacher] = useState('')
 
@@ -17,6 +18,8 @@ const AddTeacherModal = ({isModalOpen, setModalOpen}) =>{
         if(response){
             //notify
             setModalOpen(false)
+            let courseId = localStorage.getItem("currentCourseId")
+            updateCourseInfo(courseId)
         }
         else{
             //notify

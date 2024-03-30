@@ -7,22 +7,17 @@ import CourseRequirements from "../../components/CousreRequirements/CourseRequir
 import CourseUsers from "../../components/CourseUsers/CourseUsers.jsx";
 import RequirementsAndAnnotationsEditModal
     from "../../components/Modals/RequirementsAndAnnotationEditModal/RequirementsAndAnnotationsEditModal.jsx";
+import {useCourse} from "../../CourseProvider/CourseProvider.jsx";
 
 const {Title} = Typography
 const id = '59101733-350f-4f4c-9320-08dc4e48c3db'
 const CoursePage = () => {
     localStorage.setItem('currentCourseId', '59101733-350f-4f4c-9320-08dc4e48c3db')
-
-    const [course, setCourse] = useState({});
     const [isModalOpen, setModalOpen] = useState(false)
+    const { courseInfo, updateCourseInfo } = useCourse();
 
     const fetchInfo = async () => {
-        const courseInfo = await getCourse(id);
-        if (courseInfo) {
-            setCourse(courseInfo)
-        } else {
-            //notify
-        }
+        updateCourseInfo(id)
     }
 
     const onEditClick = () => {
@@ -38,22 +33,17 @@ const CoursePage = () => {
         <>
             <div className={styles.cardContainer}>
                 <Card className={styles.card}>
-                    <Title>{course.name}</Title>
+                    <Title>{courseInfo.name}</Title>
                     <Space className={styles.info}>
                         <Title level={4}>Основные данные курса</Title>
                         <Button onClick={onEditClick}>Редактировать</Button>
                     </Space>
-                    <CourseInfo maximumStudentsCount={course.maximumStudentsCount} semester={course.semester}
-                                startYear={course.startYear} status={course.status}
-                                studentsEnrolledCount={course.studentsEnrolledCount}
-                                studentsInQueueCount={course.studentsInQueueCount}/>
-                    <CourseRequirements requirements={course.requirements} notifications={course.notifications}
-                                        annotations={course.annotations}/>
-                    <CourseUsers students={course.students} teachers={course.teachers}/>
+                    <CourseInfo />
+                    <CourseRequirements/>
+                    <CourseUsers />
                 </Card>
             </div>
-            <RequirementsAndAnnotationsEditModal isModalOpen={isModalOpen} setModalOpen={setModalOpen}
-                                                 annotations={course.annotations} requirements={course.requirements}/>
+            <RequirementsAndAnnotationsEditModal isModalOpen={isModalOpen} setModalOpen={setModalOpen}/>
         </>
     )
 }

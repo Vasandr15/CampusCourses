@@ -4,19 +4,19 @@ import StatusInfo from "./StatusInfo/StatusInfo.jsx";
 import SemesterInfo from "./SemesterInfo/SemesterInfo.jsx";
 import StudentsInfo from "./StudentsInfo/StudentsInfo.jsx";
 import RequestsInfo from "./RequestsInfo/RequestsInfo.jsx";
+import {useCourse} from "../../CourseProvider/CourseProvider.jsx";
 
-const CourseInfo = ({startYear,maximumStudentsCount, studentsEnrolledCount, studentsInQueueCount, status, semester }) =>{
-
+const CourseInfo = () =>{
     return(
         <>
             <Card className={styles.card}>
-                <StatusInfo status={status}/>
+                <StatusInfo />
                 <Divider/>
-                <SemesterInfo startYear={startYear} semester={semester}/>
+                <SemesterInfo/>
                 <Divider/>
-                <StudentsInfo studentsEnrolledCount={studentsEnrolledCount} maximumStudentsCount={maximumStudentsCount}/>
+                <StudentsInfo/>
                 <Divider/>
-                <RequestsInfo studentsInQueueCount={studentsInQueueCount}/>
+                <RequestsInfo />
             </Card>
         </>
     )
