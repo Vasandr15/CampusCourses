@@ -7,12 +7,15 @@ import {postRegisterUser} from "../../API/User/postRegisterUser.js";
 import locale from 'antd/es/date-picker/locale/ru_RU.js';
 import 'dayjs/locale/ru.js';
 import {InfoCircleOutlined} from "@ant-design/icons";
+import {Link, useNavigate} from "react-router-dom";
+import {routes} from "../../consts/routes.js";
 
 const {Title} = Typography;
 const dateFormat = 'DD/MM/YYYY';
 export const RegisterForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate()
 
     const onFinish = async (values) => {
         setLoading(true);
@@ -22,7 +25,7 @@ export const RegisterForm = () => {
         if(data){
             //add notification
             localStorage.setItem('token', data.token)
-            //add navigate
+            navigate(routes.root())
         }
         else{
             //add notification
@@ -76,7 +79,7 @@ export const RegisterForm = () => {
                     </Flex>
                 </Form>
                 <Flex className={styles.textContainer}>
-                    Уже есть аккаунт? <a>Войти</a>
+                    <p>Уже есть аккаунт?<Link to={routes.login()}> Войти</Link></p>
                 </Flex>
             </Card>
         </>

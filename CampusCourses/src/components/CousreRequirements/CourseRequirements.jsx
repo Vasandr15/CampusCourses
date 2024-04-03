@@ -3,7 +3,7 @@ import Requirements from "./Requirements/Requirements.jsx";
 import Annotations from "./Annotations/Annotations.jsx";
 import NotificationLabel from "./Notifications/NotificationLabel.jsx";
 import Notifications from "./Notifications/Notifications.jsx";
-import {useCourse} from "../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../providers/CourseProvider.jsx";
 
 const CourseRequirements = () =>{
 

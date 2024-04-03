@@ -1,8 +1,9 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const putEditProfile = async (data) => {
     try {
-        const response = await axios.put(`https://camp-courses.api.kreosoft.space/profile`, data ,{
+        const response = await axios.put(`${baseURL}/profile`, data ,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }

@@ -2,15 +2,17 @@ import {Card, Col, Row, Space, Typography} from 'antd';
 import {getCourseStatus} from "../../helpers/courseStatus.js";
 import {getCourseYear} from "../../helpers/courseYear.js";
 import {getCourseSemester} from "../../helpers/courseSemester.js";
-import styles from './listItem.module.css'
 import {getStatusStyle} from "../../helpers/courseStatusStyle.js";
+import {useNavigate} from "react-router-dom";
+import {routes} from "../../consts/routes.js";
 
-const {Title, Text} = Typography;
+const {Text} = Typography;
 
 const ListItem = ({course}) => {
+    const navigate = useNavigate()
     return (
-        <Card hoverable title={course.name} style={{ width: '300%' }}>
-        <Row>
+        <Card hoverable title={course.name} style={{width: '300%'}} onClick={() => navigate(routes.course(course.id))}>
+            <Row>
                 <Col>
                     <Space direction="vertical">
                         <Text>Учебный год - {getCourseYear(course.startYear)}</Text>

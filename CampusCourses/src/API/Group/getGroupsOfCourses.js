@@ -1,8 +1,9 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const getGroupsOfCourses = async () =>{
     try{
-        let response = await axios.get('https://camp-courses.api.kreosoft.space/groups',
+        let response = await axios.get(`${baseURL}/groups`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

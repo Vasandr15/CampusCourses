@@ -1,12 +1,11 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
-export const postChangeStudentMark = async (studentId, markType, mark) =>{
+export const postChangeStudentMark = async (studentId, markType, mark, courseId) =>{
     try{
         let data = {"markType" : markType, "mark" : mark}
-        let courseId = localStorage.getItem("currentCourseId")
-        console.log(studentId, courseId, markType, mark)
         let response = await axios
-            .post(`https://camp-courses.api.kreosoft.space/courses/${courseId}/marks/${studentId}`, data,
+            .post(`${baseURL}/courses/${courseId}/marks/${studentId}`, data,
                 {
                     headers: {
                         Authorization: `Bearer ${localStorage.getItem("token")}`

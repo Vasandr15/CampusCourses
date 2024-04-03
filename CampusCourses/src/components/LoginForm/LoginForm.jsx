@@ -4,13 +4,16 @@ import {Validations} from "../../consts/validationRules.js";
 import styles from './loginForm.module.css'
 import {useState} from "react";
 import {postLoginUser} from "../../API/User/postLoginUser.js";
-import {useNotification} from "../../contexts/NotificationContext.jsx";
+import {useNotification} from "../../providers/NotificationProvider.jsx";
+import {Link, useNavigate} from "react-router-dom";
+import {routes} from "../../consts/routes.js";
 
 const {Title} = Typography;
 export const LoginForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const {notify} = useNotification();
+    const navigate = useNavigate()
 
     const onFinish = async (values) => {
         setLoading(true);
@@ -19,6 +22,7 @@ export const LoginForm = () => {
         if(data){
             notify('success', 'Вы успешно вошли')
             localStorage.setItem('token', data.token)
+            navigate(routes.root())
         }
         else{
             notify('error', 'Неверный логин или пароль')
@@ -47,7 +51,7 @@ export const LoginForm = () => {
                         <Button type='primary' htmlType='submit' loading={loading}>Войти</Button>
                     </Flex>
                     <Flex className={styles.textContainer}>
-                        Ещё нет аккаунта?<a> Зарегестрироваться</a>
+                        <p>Ещё нет аккаунта? <Link to={routes.registration()}>Зарегестрироваться</Link></p>
                     </Flex>
                 </Form>
             </Card>

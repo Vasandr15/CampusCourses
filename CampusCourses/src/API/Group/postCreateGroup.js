@@ -1,4 +1,5 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const postCreateGroup = async (name) =>{
 
@@ -6,7 +7,7 @@ export const postCreateGroup = async (name) =>{
 
     try{
         const response = await axios.post(
-            'https://camp-courses.api.kreosoft.space/groups',
+            `${baseURL}/groups`,
             body,
             {
                 headers: {

@@ -1,22 +1,24 @@
 import {Col, Row, Space, Typography} from "antd";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {getCourseYear} from "../../../helpers/courseYear.js";
+import {getCourseSemester} from "../../../helpers/courseSemester.js";
 
 const {Text} = Typography
 const SemesterInfo = () =>{
-
     const { courseInfo } = useCourse();
+
     return(
         <Row>
             <Col md={12}>
                 <Space direction={"vertical"}>
                     <Text strong>Учебный год:</Text>
-                    <Text>{courseInfo.startYear}</Text>{/* add function to get proper year*/}
+                    <Text>{getCourseYear(courseInfo.startYear)}</Text>
                 </Space>
             </Col>
             <Col md={12}>
                 <Space direction={"vertical"}>
                     <Text strong>Семестр:</Text>
-                    <Text>{courseInfo.semester}</Text>{/* add function to get proper semester*/}
+                    <Text>{getCourseSemester(courseInfo.semester)}</Text>
                 </Space>
             </Col>
         </Row>

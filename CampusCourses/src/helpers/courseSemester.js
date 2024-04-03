@@ -1,8 +1,11 @@
+import {semesters} from "../consts/Semesters.js";
+import {semestersRu} from "../consts/SemestersRu.js";
+
 export const getCourseSemester = (semester) => {
     switch (semester){
-        case 'Autumn':
-            return 'Осенний'
-        case 'Spring':
-            return 'Весенний'
+        case semesters.autumn():
+            return semestersRu.autumn()
+        case semesters.spring():
+            return semestersRu.spring()
     }
 }

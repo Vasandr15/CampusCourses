@@ -1,12 +1,13 @@
 import {studentMarks} from "../consts/StudentMarks.js";
+import {GREEN, GREY, RED} from "../consts/colors.js";
 
 export const getTagMarkColor = (mark) =>{
     switch (mark){
         case studentMarks.NotDefined():
-            return 'rgba(213,213,213,0.49)'
+            return GREY
         case studentMarks.Failed():
-            return 'rgb(248,75,75)'
+            return RED
         case studentMarks.Passed():
-            return 'rgba(46,157,56,0.98)'
+            return GREEN
     }
 }

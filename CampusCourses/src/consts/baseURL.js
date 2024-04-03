@@ -1,0 +1,1 @@
+export const baseURL = 'https://camp-courses.api.kreosoft.space'

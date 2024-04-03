@@ -8,10 +8,6 @@ import ProfileInfo from "../ProfileInfo/ProfileInfo.jsx";
 import ProfileEditForm from "../ProfileEdit/ProfileEditForm.jsx";
 
 const { Title } = Typography;
-
-localStorage.setItem('token',
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1laWQiOiJkZDQyNDFkZC0xMmExLTQzODUtMDlhNi0wOGRjNDJhNjMxY2MiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9hdXRoZW50aWNhdGlvbiI6IjU4MjBmZTI5LWMyMWMtNDQ4NC04ZDgzLTgzOTIxMTQ5NjY0OCIsIm5iZiI6MTcxMDQyOTg0MSwiZXhwIjoxNzEwNDMzNDQxLCJpYXQiOjE3MTA0Mjk4NDEsImlzcyI6IkNhbXB1c0NvdXJzZS5BUEkiLCJhdWQiOiJDYW1wdXNDb3Vyc2UuQVBJIn0.5WaEUXE8_C2_0meMyo-4gPoi96jb6fZ6jeEo2tFLDis"
-)
 const ProfileCard = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [editing, setEditing] = useState(false);

@@ -1,10 +1,10 @@
 import { Button, DatePicker, Form, Input, Modal, Radio, Select, Space } from "antd";
 import { useEffect, useState } from "react";
-import NumericInput from "../NumericInput/NumericInput.jsx";
-import { getUsers } from "../../API/Users/getUsers.js";
+import NumericInput from "../../NumericInput/NumericInput.jsx";
+import { getUsers } from "../../../API/Users/getUsers.js";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
-import {postCreateCourse} from "../../API/Course/postCreateCourse.js";
+import {postCreateCourse} from "../../../API/Course/postCreateCourse.js";
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {

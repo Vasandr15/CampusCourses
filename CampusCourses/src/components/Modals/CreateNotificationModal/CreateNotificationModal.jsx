@@ -2,20 +2,21 @@ import {Button, Modal, Input, Space, Typography, Switch} from "antd";
 import {useState} from "react";
 import styles from '../CreateNotificationModal/statusEditModal.module.css'
 import {postCourseNotification} from "../../../API/Course/postCourseNotification.js";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {useParams} from "react-router-dom";
 
 const {TextArea} = Input
 const {Text} = Typography
 const CreateNotificationModal = ({isModalOpen, setModalOpen}) =>{
     const [notification, setNotification] = useState('')
     const [isImportant, setIsImportant] = useState(false)
+    const {courseId} = useParams()
     const {updateCourseInfo} = useCourse();
 
     const handleOk = async () =>{
-        let response = await postCourseNotification(notification, isImportant)
+        let response = await postCourseNotification(notification, isImportant, courseId)
         if(response){
             setModalOpen(false)
-            let courseId = localStorage.getItem("currentCourseId")
             updateCourseInfo(courseId)
             //notify
         }

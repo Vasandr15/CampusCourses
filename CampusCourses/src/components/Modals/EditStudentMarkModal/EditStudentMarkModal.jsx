@@ -4,13 +4,15 @@ import { studentMarks } from "../../../consts/StudentMarks.js";
 import { studentMarksRu } from "../../../consts/StudentMarksRu.js";
 import { postChangeStudentMark } from "../../../API/Course/postChangeStudentMark.js";
 import { getMarkType } from "../../../helpers/getMarkType.js";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {useParams} from "react-router-dom";
 
 const { Text } = Typography;
 
 const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark, markType }) => {
     const [newMark, setMark] = useState(currentMark);
-    const { courseInfo, updateCourseInfo } = useCourse();
+    const {updateCourseInfo } = useCourse();
+    const {courseId} = useParams()
 
     useEffect(() => {
         setMark(currentMark);
@@ -22,11 +24,10 @@ const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark
     };
 
     const handleOk = async () => {
-        let response = await postChangeStudentMark(id, markType, newMark);
+        let response = await postChangeStudentMark(id, markType, newMark, courseId);
         if (response) {
             //notify
             setModalOpen(false);
-            let courseId = localStorage.getItem("currentCourseId")
             updateCourseInfo(courseId)
         } else {
             //notify

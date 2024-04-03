@@ -1,9 +1,10 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const deleteGroup = async (id) =>{
     try{
         const response = await axios.delete(
-            `https://camp-courses.api.kreosoft.space/groups/${id}`,
+            `${baseURL}/groups/${id}`,
             {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`

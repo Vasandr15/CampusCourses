@@ -53,9 +53,7 @@ const GroupsOfCoursesPage = () => {
     return (
         <>
             <Card className={styles.groupCard}>
-                <Flex className={styles.titleContainer}>
-                    <Title>Группы курсов</Title>
-                </Flex>
+                <Title>Группы курсов</Title>
                 {isAdmin && (
                     <Flex style={{ justifyContent: 'center' }}>
                         <Button type="primary" style={{ width: '100%' }} onClick={showCreateModal}>Создать

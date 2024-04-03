@@ -1,17 +1,19 @@
 import { Button, Modal, Radio, Space } from "antd";
 import {useEffect, useState} from "react";
 import {postChangeCourseStatus} from "../../../API/Course/postChangeCourseStatus.js";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {useParams} from "react-router-dom";
+import {courseStatus} from "../../../consts/CourseStatus.js";
 
 const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
     const { courseInfo, updateCourseInfo } = useCourse();
     const [newStatus, setNewStatus] = useState(courseInfo.status);
+    const {courseId} = useParams()
 
     const handleOk = async () => {
-        let response = await postChangeCourseStatus(newStatus);
+        let response = await postChangeCourseStatus(newStatus, courseId);
         if (response){
             setModalOpen(false)
-            let courseId = localStorage.getItem("currentCourseId")
             updateCourseInfo(courseId)
             //notify
         }
@@ -37,9 +39,9 @@ const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
         <Modal title="Изменение статуса курса" open={isModalOpen} onCancel={handleCancel} footer={footer}>
             <Radio.Group onChange={(e) => setNewStatus(e.target.value)} value={newStatus}>
                 <Space wrap direction="vertical">
-                    <Radio value="OpenForAssigning">Открыт для записи</Radio> {/*change to consts*/}
-                    <Radio value="Started">В процессе</Radio> {/*change to consts*/}
-                    <Radio value="Finished">Завершен</Radio> {/*change to consts*/}
+                    <Radio value={courseStatus.openForAssigning()}>Открыт для записи</Radio>
+                    <Radio value={courseStatus.started()}>В процессе</Radio>
+                    <Radio value={courseStatus.finished()}>Завершен</Radio>
                 </Space>
             </Radio.Group>
         </Modal>

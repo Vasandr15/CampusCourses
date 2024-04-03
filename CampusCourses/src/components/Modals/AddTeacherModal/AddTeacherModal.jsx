@@ -1,24 +1,31 @@
 import {Button, Modal, Select} from "antd";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {postAddTeacher} from "../../../API/Course/postAddTeacher.js";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {getUsers} from "../../../API/Users/getUsers.js";
+import {useParams} from "react-router-dom";
 
 const AddTeacherModal = ({isModalOpen, setModalOpen}) =>{
     const {updateCourseInfo } = useCourse();
     const [users, setUsers] = useState([])
     const [teacher, setTeacher] = useState('')
+    const {courseId} = useParams()
 
     const fetchUsers = async () =>{
-        // add api request
-        setUsers([])
+        const users = await getUsers()
+        if(users) {
+            setUsers(users)
+        }
+        else{
+            //notify
+        }
     }
 
     const handleOk = async () =>{
-        let response = await postAddTeacher(teacher)
+        let response = await postAddTeacher(teacher, courseId)
         if(response){
             //notify
             setModalOpen(false)
-            let courseId = localStorage.getItem("currentCourseId")
             updateCourseInfo(courseId)
         }
         else{
@@ -30,6 +37,10 @@ const AddTeacherModal = ({isModalOpen, setModalOpen}) =>{
         setTeacher('')
         setModalOpen(false)
     }
+
+    useEffect(() => {
+        fetchUsers()
+    }, []);
 
     const footer =[
         <Button key={"back"} onClick={handleCancel}>Отменить</Button>,

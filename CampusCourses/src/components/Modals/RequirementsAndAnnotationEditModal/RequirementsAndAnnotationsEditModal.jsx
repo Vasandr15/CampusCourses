@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import { putChangeRequirementsAndAnnotations } from "../../../API/Course/putChangeRequirementsAndAnnotations.js";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
 
 const { Text } = Typography;
 
@@ -11,6 +11,7 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
     const { courseInfo, updateCourseInfo } = useCourse();
     const [newRequirements, setNewRequirements] = useState(courseInfo.requirements);
     const [newAnnotations, setNewAnnotations] = useState(courseInfo.annotations);
+    const {courseId} = useCourse()
 
     useEffect(() => {
         setNewRequirements(courseInfo.requirements);
@@ -22,10 +23,9 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
     }
 
     const handleOk = async () => {
-        let response = await putChangeRequirementsAndAnnotations(newRequirements, newAnnotations);
+        let response = await putChangeRequirementsAndAnnotations(newRequirements, newAnnotations, courseId);
         if (response) {
             setModalOpen(false);
-            const courseId = localStorage.getItem("currentCourseId")
             updateCourseInfo(courseId)
             // Notify success
         } else {

@@ -1,13 +1,13 @@
 import {Button, Popconfirm, Space} from "antd";
 import {postChangeStudentStatus} from "../../../../../API/Course/postChangeStudentStatus.js";
 import {studentStatuses} from "../../../../../consts/StudentStatuses.js";
-import {useCourse} from "../../../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../../../providers/CourseProvider.jsx";
+import {useParams} from "react-router-dom";
 
 const InQueueStudent = ({studentId}) =>{
-
+    const {courseId} = useParams()
     const {updateCourseInfo } = useCourse();
     const changeStudentStatus = async (status) =>{
-        const courseId = localStorage.getItem('currentCourseId')
         let response = await postChangeStudentStatus(courseId, studentId, status)
         if (response){
             //notify success

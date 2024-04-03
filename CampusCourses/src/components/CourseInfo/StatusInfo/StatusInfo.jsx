@@ -2,7 +2,9 @@ import styles from "../StatusInfo/status.module.css";
 import {Button, Space, Typography} from "antd";
 import CourseStatusEditModal from "../../Modals/CourseStatusEditModal/CourseStatusEditModal.jsx";
 import {useState} from "react";
-import {useCourse} from "../../../contexts/CourseProvider.jsx";
+import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {getStatusStyle} from "../../../helpers/courseStatusStyle.js";
+import {getCourseStatus} from "../../../helpers/courseStatus.js";
 
 const {Text} = Typography
 const StatusInfo = ()=>{
@@ -18,11 +20,11 @@ const StatusInfo = ()=>{
             <Space className={styles.status}>
                 <Space direction={"vertical"}>
                     <Text strong>Статус курса: </Text>
-                    <Text>{courseInfo.status}</Text> {/*add function for getting status in russian and color*/}
+                    <Text strong style={{color: getStatusStyle(courseInfo.status)}}>{getCourseStatus(courseInfo.status)}</Text>
                 </Space>
                 <Button onClick={onEditClick}>Изменить статус</Button>
             </Space>
-            <CourseStatusEditModal setModalOpen={setModalOpen} isModalOpen={isModalOpen} status={status} />
+            <CourseStatusEditModal setModalOpen={setModalOpen} isModalOpen={isModalOpen} />
         </>
 
     )

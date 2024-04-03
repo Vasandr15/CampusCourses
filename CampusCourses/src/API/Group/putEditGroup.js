@@ -1,4 +1,5 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const putEditGroup = async (id, name) =>{
 
@@ -6,7 +7,7 @@ export const putEditGroup = async (id, name) =>{
 
     try{
         const response = await axios.put(
-            `https://camp-courses.api.kreosoft.space/groups/${id}`,
+            `${baseURL}/groups/${id}`,
             body,
             {
                 headers: {

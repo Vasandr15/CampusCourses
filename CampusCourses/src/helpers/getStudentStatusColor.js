@@ -1,14 +1,13 @@
 import {studentStatuses} from "../consts/StudentStatuses.js";
+import {BLUE, GREEN, RED} from "../consts/colors.js";
 
 export const getStudentStatusColor = (status)=>{
     switch (status){
         case studentStatuses.InQueue():
-            return 'rgb(12,89,255)'
+            return BLUE
         case studentStatuses.Accepted():
-            return 'rgba(46,157,56,0.98)'
+            return GREEN
         case studentStatuses.Declined():
-            return 'rgb(248,75,75)'
-
+            return RED
     }
-
 }

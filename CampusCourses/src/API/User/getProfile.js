@@ -1,8 +1,9 @@
 import axios from "axios";
+import {baseURL} from "../../consts/baseURL.js";
 
 export const getProfile = async () => {
     try {
-        const response = await axios.get(`https://camp-courses.api.kreosoft.space/profile`,{
+        const response = await axios.get(`${baseURL}/profile`,{
             headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`
             }
