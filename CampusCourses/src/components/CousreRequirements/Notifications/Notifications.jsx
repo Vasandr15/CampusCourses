@@ -3,7 +3,9 @@ import styles from '../Notifications/notifications.module.css'
 import {WarningFilled} from "@ant-design/icons";
 import {useState} from "react";
 import CreateNotificationModal from "../../Modals/CreateNotificationModal/CreateNotificationModal.jsx";
-const Notifications = ({notifications}) =>{
+import {connect} from "react-redux";
+import {currentCourseRoles} from "../../../consts/currentCourseRoles.js";
+const Notifications = ({notifications, roles, currentCourseRole}) =>{
 
     const [isModalOpen, setModalOpen] = useState(false)
 
@@ -12,10 +14,14 @@ const Notifications = ({notifications}) =>{
     }
 
     return(
-        <>
-            <Space>
-                <Button type="primary" onClick={handleClick}>Добавить уведомление</Button>
-            </Space>
+        <>{
+                roles.isAdmin || currentCourseRole === currentCourseRoles.teacher()
+                || currentCourseRole === currentCourseRoles.mainTeacher() && (
+                    <Space style={{marginBottom: '5px'}}>
+                        <Button type="primary" onClick={handleClick}>Добавить уведомление</Button>
+                    </Space>
+                )
+            }
             <div className={styles.container}>
                 <List dataSource={notifications}
                       renderItem={(item) => (
@@ -29,5 +35,9 @@ const Notifications = ({notifications}) =>{
         </>
     )
 }
+const mapStateToProps = (state) => ({
+    roles: state.roles.roles,
+    currentCourseRole: state.currentCourseRole.currentCourseRole
+});
 
-export default Notifications
+export default connect(mapStateToProps) (Notifications);

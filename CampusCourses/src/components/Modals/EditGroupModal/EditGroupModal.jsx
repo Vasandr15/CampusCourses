@@ -1,19 +1,27 @@
 import {Modal, Button, Input} from 'antd'
 import {useState} from "react";
 import {putEditGroup} from "../../../API/Group/putEditGroup.js";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 const EditGroupModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) => {
     const [newCourseName, setNewCourseName] = useState(courseName);
     const [loading, setLoading] = useState(false);
+    const {notify} = useNotification()
+
     const handleOk = async () => {
         setLoading(true)
         const response = await putEditGroup(id, newCourseName)
         setTimeout(() =>{
             setLoading(false)
             if(response === 200){
-                //notify
+                notify(notificationTypes.success(), notificationText.editGroup.Success())
                 setIsModalOpen(false)
                 updateGroups();
+            }
+            else{
+                notify(notificationTypes.error(), notificationText.editGroup.Fail())
             }
         }, 500)
         setIsModalOpen(false);

@@ -4,21 +4,25 @@ import {postChangeCourseStatus} from "../../../API/Course/postChangeCourseStatus
 import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
 import {courseStatus} from "../../../consts/CourseStatus.js";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
     const { courseInfo, updateCourseInfo } = useCourse();
     const [newStatus, setNewStatus] = useState(courseInfo.status);
     const {courseId} = useParams()
+    const {notify} = useNotification()
 
     const handleOk = async () => {
         let response = await postChangeCourseStatus(newStatus, courseId);
         if (response){
             setModalOpen(false)
             updateCourseInfo(courseId)
-            //notify
+            notify(notificationTypes.success(),notificationText.editCourseStatus.Success() )
         }
         else{
-            //notify
+            notify(notificationTypes.error(), notificationText.editCourseStatus.Fail())
             setNewStatus(courseInfo.status)
         }
     };

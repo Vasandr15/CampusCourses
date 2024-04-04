@@ -3,18 +3,23 @@ import {postChangeStudentStatus} from "../../../../../API/Course/postChangeStude
 import {studentStatuses} from "../../../../../consts/StudentStatuses.js";
 import {useCourse} from "../../../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
+import {useNotification} from "../../../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../../../consts/notificationTypes.js";
+import {notificationText} from "../../../../../consts/notificationText.js";
 
 const InQueueStudent = ({studentId}) =>{
     const {courseId} = useParams()
     const {updateCourseInfo } = useCourse();
+    const {notify} = useNotification()
+
     const changeStudentStatus = async (status) =>{
         let response = await postChangeStudentStatus(courseId, studentId, status)
         if (response){
-            //notify success
+            notify(notificationTypes.success(), notificationText.changeStudentStatus.Success())
             updateCourseInfo(courseId)
         }
         else{
-            //notify fail
+            notify(notificationTypes.error(), notificationText.changeStudentStatus.Fail())
         }
     }
 

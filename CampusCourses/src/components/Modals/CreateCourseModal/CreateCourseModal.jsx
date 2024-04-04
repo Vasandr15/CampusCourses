@@ -5,13 +5,19 @@ import { getUsers } from "../../../API/Users/getUsers.js";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import {postCreateCourse} from "../../../API/Course/postCreateCourse.js";
+import {semesters} from "../../../consts/Semesters.js";
+import {semestersRu} from "../../../consts/SemestersRu.js";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
     const [users, setUsers] = useState([])
-    const [maximumStudentsCount, setMaximumStudentsCount] = useState(''); // State for maximumStudentsCount
+    const [maximumStudentsCount, setMaximumStudentsCount] = useState('');
+    const {notify} = useNotification();
 
     const handleMaximumStudentsCountChange = (value) => {
         setMaximumStudentsCount(value);
@@ -24,10 +30,14 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
         setTimeout(() => {
             setLoading(false);
             if (response) {
-                //notify
-                setIsModalOpen(false);
+                notify(notificationTypes.success(), notificationText.createCourse.Success())
                 updateCourses();
+                setIsModalOpen(false);
             }
+            else{
+                notify(notificationTypes.error(), notificationText.createCourse.Fail())
+            }
+
         }, 500);
     };
 
@@ -40,7 +50,7 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
             }));
             setUsers(formattedUsers);
         } else {
-            //notify
+            notify(notificationTypes.error(), notificationText.fetchUsers.Fail())
         }
     }
 
@@ -80,8 +90,8 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
                     </Form.Item>
                     <Form.Item name="semester" label="Семестр">
                         <Radio.Group>
-                            <Radio value={'Autumn'}>Осенний</Radio>
-                            <Radio value={'Spring'}>Весенний</Radio>
+                            <Radio value={semesters.autumn()}>{semestersRu.autumn()}</Radio>
+                            <Radio value={semesters.spring()}>{semestersRu.autumn()}</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Space>

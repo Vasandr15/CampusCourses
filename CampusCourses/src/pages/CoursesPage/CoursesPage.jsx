@@ -6,23 +6,27 @@ import {Button, Card, Flex, Typography} from "antd";
 import styles from "./courses.module.css";
 import CreateCourseModal from "../../components/Modals/CreateCourseModal/CreateCourseModal.jsx";
 import {PlusOutlined} from "@ant-design/icons";
+import {connect} from "react-redux";
+import {useNotification} from "../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../consts/notificationTypes.js";
+import {notificationText} from "../../consts/notificationText.js";
 
 const {Title} = Typography
-const CoursesPage = () => {
+const CoursesPage = ({roles}) => {
     const [courses, setCourses] = useState([])
     const { groupId } = useParams();
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {notify} = useNotification()
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const fetchCourses = async () => {
         const courses = await getCourses(groupId);
-        console.log(groupId)
         if (courses) {
             setCourses(courses)
         } else {
-            //notify
+            notify(notificationTypes.error(), notificationText.pageLoading.Fail())
         }
     }
 
@@ -34,9 +38,11 @@ const CoursesPage = () => {
         <>
             <Flex className={styles.cardContainer}>
                 <Card className={styles.card}>
-                    <Title>Группа - {name}</Title> {/* как передать имя группы */}
+                    <Title>Группа - {''}</Title>
                     <Flex style={{ justifyContent: 'center' }}>
-                        <Button onClick={showModal} style={{width: '100%'}} type='primary'>Создать курс <PlusOutlined /></Button> {/* only for admin*/}
+                        {roles.isAdmin && (
+                            <Button onClick={showModal} style={{width: '100%'}} type='primary'>Создать курс <PlusOutlined /></Button>
+                        )}
                     </Flex>
                     <Courses courses={courses} fetchCourses={fetchCourses} groupId={groupId}/>
                 </Card>
@@ -47,4 +53,8 @@ const CoursesPage = () => {
     )
 }
 
-export default CoursesPage;
+const mapStateToProps = (state) => ({
+    roles: state.roles.roles
+});
+
+export default connect(mapStateToProps) (CoursesPage);

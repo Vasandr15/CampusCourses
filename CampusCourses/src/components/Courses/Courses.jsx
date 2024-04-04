@@ -3,7 +3,6 @@ import ListItem from "../../components/ListItem/ListItem.jsx";
 
 const Courses = ({courses}) => {
 
-
     return (
         <List
             dataSource={courses}
@@ -14,7 +13,6 @@ const Courses = ({courses}) => {
             )}
         />
     )
-
 }
 
 export default Courses;

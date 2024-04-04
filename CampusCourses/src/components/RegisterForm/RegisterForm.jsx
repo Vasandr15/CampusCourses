@@ -9,29 +9,33 @@ import 'dayjs/locale/ru.js';
 import {InfoCircleOutlined} from "@ant-design/icons";
 import {Link, useNavigate} from "react-router-dom";
 import {routes} from "../../consts/routes.js";
+import {DATE_FORMAT} from "../../consts/strings.js";
+import {useNotification} from "../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../consts/notificationTypes.js";
+import {notificationText} from "../../consts/notificationText.js";
 
 const {Title} = Typography;
-const dateFormat = 'DD/MM/YYYY';
 export const RegisterForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
+    const {notify} = useNotification()
 
     const onFinish = async (values) => {
         setLoading(true);
         cleanUpValues(values);
         console.log(values);
         let data = await postRegisterUser(values);
-        if(data){
-            //add notification
-            localStorage.setItem('token', data.token)
-            navigate(routes.root())
-        }
-        else{
-            //add notification
-        }
         setTimeout(() => {
             setLoading(false);
+            if(data){
+                notify(notificationTypes.success(), notificationText.registration.Success())
+                localStorage.setItem('token', data.token)
+                navigate(routes.root())
+            }
+            else{
+                notify(notificationText.registration.Fail())
+            }
         }, 500);
     }
 
@@ -62,7 +66,7 @@ export const RegisterForm = () => {
                         <Input/>
                     </Form.Item>
                     <Form.Item name="birthDate" label="Дата рождения" rules={Validations.birthDateValidationRules()}>
-                        <DatePicker style={{width: '100%'}} locale={locale} format={dateFormat}/>
+                        <DatePicker style={{width: '100%'}} locale={locale} format={DATE_FORMAT}/>
                     </Form.Item>
                     <Form.Item name="password" label="Пароль" hasFeedback rules={Validations.passwordValidation()}>
                         <Input.Password/>

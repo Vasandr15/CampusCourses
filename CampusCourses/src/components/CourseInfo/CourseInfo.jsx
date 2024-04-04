@@ -4,7 +4,6 @@ import StatusInfo from "./StatusInfo/StatusInfo.jsx";
 import SemesterInfo from "./SemesterInfo/SemesterInfo.jsx";
 import StudentsInfo from "./StudentsInfo/StudentsInfo.jsx";
 import RequestsInfo from "./RequestsInfo/RequestsInfo.jsx";
-import {useCourse} from "../../providers/CourseProvider.jsx";
 
 const CourseInfo = () =>{
     return(

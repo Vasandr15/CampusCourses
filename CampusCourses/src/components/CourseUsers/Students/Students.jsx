@@ -1,8 +1,7 @@
 import styles from "../Students/students.module.css";
-import {Button, List, Space, Tag, Typography} from "antd";
+import { List} from "antd";
 import StudentListItem from "./StudentListItem/StudentListItem.jsx";
 
-const {Text} = Typography
 const Students = ({students}) => {
     return (
         <div className={styles.container}>

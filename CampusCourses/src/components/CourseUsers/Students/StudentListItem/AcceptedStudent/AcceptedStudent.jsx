@@ -20,18 +20,26 @@ const AcceptedStudent = ({ id, name, finalResult, midtermResult }) => {
     return (
         <>
             <Space className={styles.listItem}>
-                <Space direction="horizontal" wrap>
-                    <Button onClick={() => handleClick(midtermResult, MarkTypes.Mid())} type="link">
-                        {MarkTypesRu.Mid()}
-                    </Button>-
-                    <ResultTag result={midtermResult} />
-                </Space>
-                <Space direction="horizontal" wrap>
-                    <Button onClick={() => handleClick(finalResult, MarkTypes.Final())} type="link">
-                        {MarkTypesRu.Final()}
-                    </Button>-
-                    <ResultTag result={finalResult} />
-                </Space>
+                {
+                    midtermResult && (
+                        <Space direction="horizontal" wrap>
+                            <Button onClick={() => handleClick(midtermResult, MarkTypes.Mid())} type="link">
+                                {MarkTypesRu.Mid()}
+                            </Button>-
+                            <ResultTag result={midtermResult} />
+                        </Space>
+                    )
+                }
+                {
+                    finalResult && (
+                        <Space direction="horizontal" wrap>
+                            <Button onClick={() => handleClick(finalResult, MarkTypes.Final())} type="link">
+                                {MarkTypesRu.Final()}
+                            </Button>-
+                            <ResultTag result={finalResult} />
+                        </Space>
+                    )
+                }
             </Space>
             <EditStudentMarkModal id={id} name={name} currentMark={mark} markType={attestation}
                 setModalOpen={setModalOpen} isModalOpen={isModalOpen}/>

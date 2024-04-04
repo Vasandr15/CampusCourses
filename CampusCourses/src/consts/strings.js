@@ -10,3 +10,4 @@ export const CONFIRM_PASSWORD = 'Подтвердите свой пароль';
 export const MIN_1_DIGIT_REGEX = /.*[0-9].*/;
 export const ONLY_LETTERS_REGEX   = /^[a-zA-Zа-яА-Я]+\s*$/;
 export const DATE_FORMAT = 'DD.MM.YYYY';
+export const YEAR_FORMAT = 'YYYY'

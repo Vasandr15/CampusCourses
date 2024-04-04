@@ -2,9 +2,10 @@ import {Button, List, Space, Tag, Typography} from "antd";
 import styles from "../Teachers/teachers.module.css";
 import {useState} from "react";
 import AddTeacherModal from "../../Modals/AddTeacherModal/AddTeacherModal.jsx";
+import {connect} from "react-redux";
 
 const {Text} = Typography
-const Teachers = ({teachers}) => {
+const Teachers = ({teachers, roles}) => {
 
     const [isModalOpen, setModalOpen] = useState(false)
 
@@ -14,9 +15,14 @@ const Teachers = ({teachers}) => {
 
     return (
         <>
-            <Space>
-                <Button type="primary" onClick={handleClick}>Добавить преподавателя</Button>
-            </Space>
+            {
+                roles.isAdmin && (
+                    <Space>
+                        <Button type="primary" onClick={handleClick}>Добавить преподавателя</Button>
+                    </Space>
+                )
+            }
+
             <div className={styles.container}>
                 <List dataSource={teachers}
                       renderItem={(teacher) => (
@@ -35,5 +41,8 @@ const Teachers = ({teachers}) => {
         </>
     )
 }
+const mapStateToProps = (state) => ({
+    roles: state.roles.roles
+});
 
-export default Teachers
+export default connect(mapStateToProps) (Teachers)

@@ -4,6 +4,9 @@ import styles from '../CreateNotificationModal/statusEditModal.module.css'
 import {postCourseNotification} from "../../../API/Course/postCourseNotification.js";
 import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 const {TextArea} = Input
 const {Text} = Typography
@@ -12,16 +15,17 @@ const CreateNotificationModal = ({isModalOpen, setModalOpen}) =>{
     const [isImportant, setIsImportant] = useState(false)
     const {courseId} = useParams()
     const {updateCourseInfo} = useCourse();
+    const {notify} = useNotification()
 
     const handleOk = async () =>{
         let response = await postCourseNotification(notification, isImportant, courseId)
         if(response){
             setModalOpen(false)
             updateCourseInfo(courseId)
-            //notify
+            notify(notificationTypes.success(), notificationText.createNotification.Success())
         }
         else{
-            //notify
+            notify(notificationTypes.error(), notificationText.createNotification.Fail())
         }
     }
 

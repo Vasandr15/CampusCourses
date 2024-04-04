@@ -3,7 +3,6 @@ import {DATE_FORMAT} from "../../consts/strings.js";
 import locale from 'antd/es/date-picker/locale/ru_RU.js';
 import 'dayjs/locale/ru.js';
 import React from "react";
-import { useForm } from "antd/es/form/Form.js";
 import { Validations } from "../../consts/validationRules.js";
 import styles from '../ProfileCard/profileCard.module.css'
 import moment from "moment";
@@ -11,12 +10,16 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from "dayjs";
 import {cleanUpValues} from "../../helpers/bodyHelper.js";
 import {putEditProfile} from "../../API/User/putEditProfile.js";
+import {useNotification} from "../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../consts/notificationTypes.js";
+import {notificationText} from "../../consts/notificationText.js";
 dayjs.extend(customParseFormat);
 
-const { Title } = Typography;
+const { Title, Text  } = Typography;
 
 const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }) => {
-    const [form] = useForm();
+    const [form] = Form.useForm();
+    const {notify} = useNotification()
     const handleCancelEdit = () => {
         setEditing(false);
     };
@@ -25,12 +28,12 @@ const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }
         cleanUpValues(values);
         let data = await putEditProfile(values);
         if (data){
-            //notify
+            notify(notificationTypes.success(),notificationText.editUserProfile.Success() )
             setEditing(false);
             setUserInfo(data)
         }
         else{
-            // notify
+            notify(notificationTypes.error(), notificationText.editUserProfile.Fail())
         }
 
     };
@@ -61,7 +64,7 @@ const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }
             </section>
             <div>
                 <Title level={4}>Email:</Title>
-                <span>{email}</span>
+                <Text>{email}</Text>
             </div>
             <section>
                 <Title level={4}>Дата рождения:</Title>

@@ -4,6 +4,9 @@ import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import { putChangeRequirementsAndAnnotations } from "../../../API/Course/putChangeRequirementsAndAnnotations.js";
 import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 const { Text } = Typography;
 
@@ -12,6 +15,7 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
     const [newRequirements, setNewRequirements] = useState(courseInfo.requirements);
     const [newAnnotations, setNewAnnotations] = useState(courseInfo.annotations);
     const {courseId} = useCourse()
+    const {notify} = useNotification()
 
     useEffect(() => {
         setNewRequirements(courseInfo.requirements);
@@ -27,9 +31,9 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
         if (response) {
             setModalOpen(false);
             updateCourseInfo(courseId)
-            // Notify success
+            notify(notificationTypes.success(), notificationText.editRequirementsAndAnnotations.Success())
         } else {
-            // Notify failure
+            notify(notificationTypes.error(), notificationText.editRequirementsAndAnnotations.Fail())
         }
     }
 

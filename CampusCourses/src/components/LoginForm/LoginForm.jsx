@@ -7,6 +7,8 @@ import {postLoginUser} from "../../API/User/postLoginUser.js";
 import {useNotification} from "../../providers/NotificationProvider.jsx";
 import {Link, useNavigate} from "react-router-dom";
 import {routes} from "../../consts/routes.js";
+import {notificationTypes} from "../../consts/notificationTypes.js";
+import {notificationText} from "../../consts/notificationText.js";
 
 const {Title} = Typography;
 export const LoginForm = () => {
@@ -20,12 +22,12 @@ export const LoginForm = () => {
         console.log(values);
         let data = await postLoginUser(values);
         if(data){
-            notify('success', 'Вы успешно вошли')
+            notify(notificationTypes.success(), notificationText.login.Success())
             localStorage.setItem('token', data.token)
             navigate(routes.root())
         }
         else{
-            notify('error', 'Неверный логин или пароль')
+            notify(notificationTypes.error(), notificationText.login.Fail())
         }
         setTimeout(() => {
             setLoading(false);

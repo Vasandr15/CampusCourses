@@ -5,40 +5,45 @@ import { getRoles } from '../../API/Users/getRoles.js';
 import { getProfile } from '../../API/User/getProfile.js';
 import { useLocation, useNavigate } from "react-router-dom";
 import { routes } from "../../consts/routes.js";
-import {postLoginUser} from "../../API/User/postLoginUser.js";
-import {postLogout} from "../../API/User/postLogout.js";
+import { postLogout } from "../../API/User/postLogout.js";
+import { setRoles } from "../../actions/rolesActions.js";
+import { connect } from 'react-redux';
+import {setEmail} from "../../actions/emailAction.js";
 
 const { Header } = Layout;
-const HeaderSection = () => {
-    const [roles, setRoles] = useState(null);
+
+const HeaderSection = ({ roles, setRoles, setEmail }) => {
     const [profile, setProfile] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
     useEffect(() => {
-        async function fetchData() {
+        const fetchData = async () => {
             try {
                 const rolesData = await getRoles();
-                const profileData = await getProfile();
                 setRoles(rolesData);
+                const profileData = await getProfile();
                 setProfile(profileData);
+                setEmail(profileData.email)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
-        }
+        };
 
         fetchData();
-    }, []);
+    }, [setRoles]);
 
-    const logout = async ()=> {
-        const response = await postLogout();
-        navigate(routes.login())
-    }
+    const logout = async () => {
+        await postLogout();
+        setTimeout(() => {
+            navigate(routes.login());
+        }, 500)
+
+    };
 
     const generateMenuItems = () => {
         let menuItems = [{ key: 'main', label: 'Главная' }];
-
-        if (roles) {
+        if (roles && profile) {
             menuItems.push({ key: 'groupOgCourses', label: 'Группы курсов' });
             if (roles.isStudent) {
                 menuItems.push({ key: 'studentCourses', label: 'Мои курсы' });
@@ -83,7 +88,7 @@ const HeaderSection = () => {
         if (path) navigate(path);
     };
 
-    const currentKey = pathToKey[location.pathname] || 'main';
+    const currentKey = pathToKey[location.pathname] ;
 
     return (
         <Header className={styles.header}>
@@ -99,4 +104,8 @@ const HeaderSection = () => {
     );
 };
 
-export default HeaderSection;
+const mapStateToProps = (state) => ({
+    roles: state.roles.roles
+});
+
+export default connect(mapStateToProps, { setRoles, setEmail})(HeaderSection);

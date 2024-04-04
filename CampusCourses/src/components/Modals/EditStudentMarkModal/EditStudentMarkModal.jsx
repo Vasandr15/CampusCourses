@@ -6,6 +6,9 @@ import { postChangeStudentMark } from "../../../API/Course/postChangeStudentMark
 import { getMarkType } from "../../../helpers/getMarkType.js";
 import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 
 const { Text } = Typography;
 
@@ -13,6 +16,7 @@ const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark
     const [newMark, setMark] = useState(currentMark);
     const {updateCourseInfo } = useCourse();
     const {courseId} = useParams()
+    const {notify} = useNotification()
 
     useEffect(() => {
         setMark(currentMark);
@@ -26,11 +30,11 @@ const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark
     const handleOk = async () => {
         let response = await postChangeStudentMark(id, markType, newMark, courseId);
         if (response) {
-            //notify
+            notify(notificationTypes.success(), notificationText.editStudentMark.Success())
             setModalOpen(false);
             updateCourseInfo(courseId)
         } else {
-            //notify
+            notify(notificationTypes.error(), notificationText.editStudentMark.Fail())
         }
     };
 

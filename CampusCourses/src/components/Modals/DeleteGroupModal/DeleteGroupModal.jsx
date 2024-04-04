@@ -1,17 +1,25 @@
 import {Modal, Button} from 'antd'
 import {deleteGroup} from "../../../API/Group/deleteGroup.js";
 import {useState} from "react";
+import {useNotification} from "../../../providers/NotificationProvider.jsx";
+import {notificationTypes} from "../../../consts/notificationTypes.js";
+import {notificationText} from "../../../consts/notificationText.js";
 const DeleteGroupModal = ({id, isModalOpen, setIsModalOpen, courseName, updateGroups}) =>{
     const [loading, setLoading] = useState(false);
+    const {notify} = useNotification()
+
     const handleOk = async() => {
         setLoading(true)
         const response = await deleteGroup(id)
         setTimeout(() =>{
             setLoading(false)
             if(response === 200){
-                //notify
+                notify(notificationTypes.success(), notificationText.deleteGroup.Success())
                 setIsModalOpen(false)
                 updateGroups();
+            }
+            else{
+                notify(notificationTypes.error(), notificationText.deleteGroup.Fail())
             }
         }, 500)
     };
