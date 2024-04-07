@@ -42,21 +42,23 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
     };
 
     const fetchUsers = async () => {
-        const users = await getUsers();
-        if (users) {
-            const formattedUsers = users.map(user => ({
-                value: user.id,
-                label: `${user.fullName}`
-            }));
-            setUsers(formattedUsers);
-        } else {
-            notify(notificationTypes.error(), notificationText.fetchUsers.Fail())
+        if(isModalOpen){
+            const users = await getUsers();
+            if (users) {
+                const formattedUsers = users.map(user => ({
+                    value: user.id,
+                    label: `${user.fullName}`
+                }));
+                setUsers(formattedUsers);
+            } else {
+                notify(notificationTypes.error(), notificationText.fetchUsers.Fail())
+            }
         }
     }
 
     useEffect(() => {
         fetchUsers()
-    }, []);
+    }, [isModalOpen]);
 
     const handleOk = () => {
         form.submit();

@@ -25,12 +25,12 @@ export const RegisterForm = () => {
         setLoading(true);
         cleanUpValues(values);
         console.log(values);
-        let data = await postRegisterUser(values);
+        const data = await postRegisterUser(values);
         setTimeout(() => {
             setLoading(false);
             if(data){
-                notify(notificationTypes.success(), notificationText.registration.Success())
                 localStorage.setItem('token', data.token)
+                notify(notificationTypes.success(), notificationText.registration.Success())
                 navigate(routes.root())
             }
             else{

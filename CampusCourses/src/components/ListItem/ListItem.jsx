@@ -11,7 +11,7 @@ const {Text} = Typography;
 const ListItem = ({course}) => {
     const navigate = useNavigate()
     return (
-        <Card hoverable title={course.name} style={{width: '300%'}} onClick={() => navigate(routes.course(course.id))}>
+        <Card hoverable title={course.name} style={{width: '100%'}} onClick={() => navigate(routes.course(course.id))}>
             <Row>
                 <Col>
                     <Space direction="vertical">

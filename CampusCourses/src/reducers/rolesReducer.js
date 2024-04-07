@@ -2,7 +2,7 @@
 import { SET_ROLES } from '../actions/rolesActions';
 
 const initialState = {
-    roles: [],
+    roles: null,
     loading: false,
     error: null
 };

@@ -9,7 +9,7 @@ const {Title, Text} = Typography;
 const ProfileInfo = ({fullName, email, birthDate, handleEdit}) =>{
 
     return (
-        <>
+        <Flex>
             <Space direction={"vertical"} wrap>
                 <Space direction={'vertical'}>
                     <Title level={4}>ФИО:</Title>
@@ -27,7 +27,7 @@ const ProfileInfo = ({fullName, email, birthDate, handleEdit}) =>{
                     <Button type="primary" icon={<EditOutlined />} onClick={handleEdit}>Редактировать</Button>
                 </Flex>
             </Space>
-        </>
+        </Flex>
     )
 }
 

@@ -3,11 +3,13 @@ import styles from '../Notifications/notifications.module.css'
 import {WarningFilled} from "@ant-design/icons";
 import {useState} from "react";
 import CreateNotificationModal from "../../Modals/CreateNotificationModal/CreateNotificationModal.jsx";
-import {connect} from "react-redux";
+import { useSelector} from "react-redux";
 import {currentCourseRoles} from "../../../consts/currentCourseRoles.js";
-const Notifications = ({notifications, roles, currentCourseRole}) =>{
+const Notifications = ({notifications}) =>{
 
     const [isModalOpen, setModalOpen] = useState(false)
+    const roles = useSelector(state => state.roles.roles)
+    const currentCourseRole = useSelector(state => state.currentCourseRole.currentCourseRole)
 
     const handleClick = () =>{
         setModalOpen(true)
@@ -15,8 +17,9 @@ const Notifications = ({notifications, roles, currentCourseRole}) =>{
 
     return(
         <>{
-                roles.isAdmin || currentCourseRole === currentCourseRoles.teacher()
-                || currentCourseRole === currentCourseRoles.mainTeacher() && (
+            ((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student()) ||
+                (currentCourseRole === (currentCourseRoles.teacher() || currentCourseRoles.mainTeacher())))
+            && (
                     <Space style={{marginBottom: '5px'}}>
                         <Button type="primary" onClick={handleClick}>Добавить уведомление</Button>
                     </Space>
@@ -35,9 +38,5 @@ const Notifications = ({notifications, roles, currentCourseRole}) =>{
         </>
     )
 }
-const mapStateToProps = (state) => ({
-    roles: state.roles.roles,
-    currentCourseRole: state.currentCourseRole.currentCourseRole
-});
 
-export default connect(mapStateToProps) (Notifications);
+export default Notifications;

@@ -1,4 +1,4 @@
-import {Button, Card, Flex, Form, Input, message, Tag, Typography} from "antd";
+import {Button, Card, Flex, Form, Input, Typography} from "antd";
 import {LockOutlined, MailOutlined} from "@ant-design/icons";
 import {Validations} from "../../consts/validationRules.js";
 import styles from './loginForm.module.css'
@@ -21,15 +21,15 @@ export const LoginForm = () => {
         setLoading(true);
         console.log(values);
         let data = await postLoginUser(values);
-        if(data){
-            notify(notificationTypes.success(), notificationText.login.Success())
-            localStorage.setItem('token', data.token)
-            navigate(routes.root())
-        }
-        else{
-            notify(notificationTypes.error(), notificationText.login.Fail())
-        }
         setTimeout(() => {
+            if(data){
+                localStorage.setItem('token', data.token)
+                notify(notificationTypes.success(), notificationText.login.Success())
+                navigate(routes.root())
+            }
+            else{
+                notify(notificationTypes.error(), notificationText.login.Fail())
+            }
             setLoading(false);
         }, 500);
     }

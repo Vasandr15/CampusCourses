@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {connect} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setCurrentCourseUserRole} from '../../actions/currentCourseUserRoleAction';
 import {getCurrentCourseUserRole} from '../../helpers/getCurrentCourseUserRole';
 import {currentCourseRoles} from '../../consts/currentCourseRoles';
@@ -19,32 +19,42 @@ import {notificationText} from "../../consts/notificationText.js";
 
 const {Title} = Typography;
 
-const CoursePage = ({roles, email, setCurrentCourseUserRole, currentCourseRole}) => {
+const CoursePage = () => {
     const [isEditModalOpen, setEditModalOpen] = useState(false);
     const [isFullEditModalOpen, setFullEditModalOpen] = useState(false);
     const {courseInfo, updateCourseInfo} = useCourse()
+    const dispatch = useDispatch()
+    const email = useSelector(state => state.email.email)
+    const roles = useSelector(state => state.roles.roles)
+    const currentCourseRole = useSelector(state => state.currentCourseRole.currentCourseRole)
     const {courseId} = useParams();
     const {notify} = useNotification()
 
     const fetchInfo = async () => {
-        updateCourseInfo(courseId);
-        const role = await getCurrentCourseUserRole(roles, courseId, courseInfo.teachers, email);
-        console.log(role);
-        setCurrentCourseUserRole(role);
-        if (!courseInfo) {
-            notify(notificationTypes.error(), notificationText.pageLoading.Fail())
+        await updateCourseInfo(courseId);
+        if (courseInfo) {
+            try {
+                const role = await getCurrentCourseUserRole(roles, courseId, courseInfo.teachers, email);
+                console.log(role);
+                dispatch(setCurrentCourseUserRole(role));
+            } catch (error) {
+                console.error('Error fetching current course user role:', error);
+            }
+        } else {
+            notify(notificationTypes.error(), notificationText.pageLoading.Fail());
         }
     };
 
+
     useEffect(() => {
         fetchInfo();
-    }, []);
+    }, [ roles]);
 
     const onEditClick = () => {
         if (roles.isAdmin) {
             setFullEditModalOpen(true);
         }
-        if (currentCourseRole === currentCourseRoles.teacher()) {
+        else if (currentCourseRole === (currentCourseRoles.teacher() || currentCourseRoles.mainTeacher())) {
             setEditModalOpen(true);
         }
     };
@@ -56,7 +66,8 @@ const CoursePage = ({roles, email, setCurrentCourseUserRole, currentCourseRole})
                     <Title>{courseInfo.name}</Title>
                     <Space className={styles.info}>
                         <Title level={4}>Основные данные курса</Title>
-                        {(roles.isAdmin || currentCourseRole === currentCourseRoles.teacher()) && (
+                        {((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student()) ||
+                            currentCourseRole === (currentCourseRoles.teacher() || currentCourseRoles.mainTeacher()) ) && (
                             <Button onClick={onEditClick}>Редактировать</Button>
                         )}
                     </Space>
@@ -71,10 +82,4 @@ const CoursePage = ({roles, email, setCurrentCourseUserRole, currentCourseRole})
     );
 };
 
-const mapStateToProps = (state) => ({
-    roles: state.roles.roles,
-    email: state.email.email,
-    currentCourseRole: state.currentCourseRole.currentCourseRole,
-});
-
-export default connect(mapStateToProps, {setCurrentCourseUserRole})(CoursePage);
+export default CoursePage;

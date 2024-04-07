@@ -1,5 +1,6 @@
 export const currentCourseRoles = {
     student: () => "student",
     mainTeacher: () => "mainTeacher",
-    teacher: () => "teacher"
+    teacher: () => "teacher",
+    none: () => "none"
 }

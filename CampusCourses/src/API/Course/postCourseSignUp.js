@@ -5,8 +5,8 @@ import { config } from "../../consts/config.js";
 export const postCourseSignUp = async (courseId) => {
     try {
         let response = await axios.post(`${baseURL}/courses/${courseId}/sign-up`,[], config);
-        console.log(response.data);
-        return response.data;
+        console.log(response);
+        return response;
     } catch (error) {
         console.log(error);
     }
