@@ -18,6 +18,7 @@ export const cleanUpValues = (values) => {
 
     console.log(values.birthDate)
     let birthDate = new Date(values.birthDate.toISOString());
-    birthDate.setDate(birthDate.getDate())
+    const timezoneOffsetInHours = birthDate.getTimezoneOffset() / 60;
+    birthDate.setHours(birthDate.getHours() - timezoneOffsetInHours)
     values.birthDate = birthDate.toISOString();
 }

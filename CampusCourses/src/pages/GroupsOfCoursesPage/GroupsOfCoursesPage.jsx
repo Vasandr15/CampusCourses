@@ -2,11 +2,10 @@ import {Typography, Flex, Button, Card} from 'antd';
 import {PlusOutlined} from '@ant-design/icons';
 import styles from '../GroupsOfCoursesPage/groups.module.css';
 import ListOfGroups from '../../components/ListOfGroups/ListOfGroups.jsx';
-import {getRoles} from '../../API/Users/getRoles.js';
 import {useEffect, useState} from 'react';
 import CreateGroupModal from "../../components/Modals/CreateGroupModal/CreateGroupModal.jsx";
 import {getGroupsOfCourses} from "../../API/Group/getGroupsOfCourses.js";
-import {connect, useSelector} from "react-redux";
+import { useSelector} from "react-redux";
 import {useNotification} from "../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
@@ -16,7 +15,7 @@ const {Title} = Typography;
 const GroupsOfCoursesPage = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [groups, setGroups] = useState([]);
-    const notify = useNotification()
+    const {notify} = useNotification()
     const roles = useSelector(state => state.roles.roles)
 
     useEffect(() => {

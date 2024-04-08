@@ -1,4 +1,5 @@
 import {getCourse} from "../API/Course/getCourse.js";
+import {handleAxiosError} from "../helpers/handleAxiosError.js";
 
 export const UPDATE_COURSE_INFO = 'UPDATE_COURSE_INFO'
 
@@ -14,6 +15,7 @@ export const getCourseInfoAction = (courseId) => {
             }
         } catch (error) {
             console.log(error);
+            handleAxiosError(error)
         }
     };
 };

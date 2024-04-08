@@ -2,7 +2,6 @@ import { Button, DatePicker, Form, Input, Modal, Radio, Select, Space } from "an
 import { useEffect, useState } from "react";
 import NumericInput from "../../NumericInput/NumericInput.jsx";
 import { getUsers } from "../../../API/Users/getUsers.js";
-import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'
 import {postCreateCourse} from "../../../API/Course/postCreateCourse.js";
 import {semesters} from "../../../consts/Semesters.js";
@@ -11,6 +10,8 @@ import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
 import RichTextEditor from "../../RichTextEditor/RichTextEditor.jsx";
+import dayjs from "dayjs";
+import {Validations} from "../../../consts/validationRules.js";
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {
@@ -33,6 +34,7 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
             if (response) {
                 notify(notificationTypes.success(), notificationText.createCourse.Success())
                 updateCourses();
+                form.resetFields()
                 setIsModalOpen(false);
             }
             else{
@@ -67,6 +69,7 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
 
     const handleCancel = () => {
         setIsModalOpen(false);
+        form.resetFields()
     };
 
     const footer = [
@@ -81,30 +84,30 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
     return (
         <Modal width={750} open={isModalOpen} footer={footer} onCancel={handleCancel} title="Создание курса">
             <Form form={form} name="courseCreation" onFinish={onFinish} layout="vertical">
-                <Form.Item name='name' label="Название курса">
+                <Form.Item name='name' label="Название курса" rules={Validations.courseValidation()}>
                     <Input placeholder={'Название курса'}/>
                 </Form.Item>
                 <Space direction="horizontal" wrap={true} style={{justifyContent: 'space-between', display: "flex"}}>
-                    <Form.Item name="startYear" label="Год начала курса">
-                        <DatePicker picker="year" placeholder="Выберете год"/>
+                    <Form.Item name="startYear" label="Год начала курса" rules={Validations.courseValidation()}>
+                        <DatePicker minDate={dayjs()} picker="year" placeholder="Выберете год"/>
                     </Form.Item>
-                    <Form.Item name="maximumStudentsCount" label="Общее кол-во мест">
+                    <Form.Item name="maximumStudentsCount" label="Общее кол-во мест" rules={Validations.courseValidation()}>
                         <NumericInput value={maximumStudentsCount} onChange={handleMaximumStudentsCountChange} />
                     </Form.Item>
-                    <Form.Item name="semester" label="Семестр">
+                    <Form.Item name="semester" label="Семестр" rules={Validations.courseValidation()}>
                         <Radio.Group>
                             <Radio value={semesters.autumn()}>{semestersRu.autumn()}</Radio>
                             <Radio value={semesters.spring()}>{semestersRu.spring()}</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Space>
-                <Form.Item name="requirements" label="Требования">
+                <Form.Item name="requirements" label="Требования" rules={Validations.courseValidation()}>
                     <RichTextEditor />
                 </Form.Item>
-                <Form.Item name="annotations" label="Аннотации">
+                <Form.Item name="annotations" label="Аннотации" rules={Validations.courseValidation()}>
                     <RichTextEditor />
                 </Form.Item>
-                <Form.Item name="mainTeacherId" label="Оновной преподаватель курса">
+                <Form.Item name="mainTeacherId" label="Оновной преподаватель курса" rules={Validations.courseValidation()}>
                     <Select showSearch
                             placeholder="Найти преподавателя"
                             optionFilterProp="children"

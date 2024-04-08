@@ -32,8 +32,6 @@ const ProfileCard = () => {
         setEditedUserInfo(userInfo);
     };
 
-
-
     return (
         <Card className={styles.card} >
             <Row align="middle" wrap>

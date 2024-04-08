@@ -1,5 +1,5 @@
 import {Layout, Menu} from 'antd';
-import {useState, useEffect} from 'react';
+import {useEffect} from 'react';
 import styles from '../Header/header.module.css';
 import {getRoles} from '../../API/Users/getRoles.js';
 import {getProfile} from '../../API/User/getProfile.js';

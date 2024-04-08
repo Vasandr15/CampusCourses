@@ -69,7 +69,7 @@ export const RegisterForm = () => {
                     }}>
                         <Input/>
                     </Form.Item>
-                    <Form.Item name="birthDate" label="Дата рождения" rules={Validations.birthDateValidationRules()}>
+                    <Form.Item name="birthDate" label="Дата рождения" rules={Validations.dateValidationRules()}>
                         <DatePicker style={{width: '100%'}} locale={locale} format={DATE_FORMAT}/>
                     </Form.Item>
                     <Form.Item name="password" label="Пароль" hasFeedback rules={Validations.passwordValidation()}>

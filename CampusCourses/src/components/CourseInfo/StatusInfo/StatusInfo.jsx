@@ -31,6 +31,7 @@ const StatusInfo = ()=>{
     }
 
     const signUp = async () =>{
+
         setLoading(true)
         const response = await postCourseSignUp(courseId);
         setTimeout(() => {

@@ -68,7 +68,7 @@ export const Validations = {
         })
     ],
 
-    birthDateValidationRules: () => [
+    dateValidationRules: () => [
         Validation.requireRule(FILL_IN),
         ({ getFieldValue }) => ({
             validator(_, value) {
@@ -80,5 +80,10 @@ export const Validations = {
             },
         }),
     ],
+
+    courseValidation: () =>[
+        Validation.requireRule(FILL_IN)
+    ],
+
 
 }

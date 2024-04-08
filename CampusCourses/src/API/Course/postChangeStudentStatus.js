@@ -1,7 +1,5 @@
 import axios from "axios";
 import {baseURL} from "../../consts/baseURL.js";
-import {handleAxiosError} from "../../helpers/handleAxiosError.js";
-
 export const postChangeStudentStatus = async (courseId, studentId, status) =>{
     try{
         let data = {"status" : status}
@@ -17,6 +15,6 @@ export const postChangeStudentStatus = async (courseId, studentId, status) =>{
     }
     catch (error){
         console.log(error)
-        handleAxiosError(error)
+
     }
 }

@@ -5,7 +5,6 @@ import 'dayjs/locale/ru.js';
 import React from "react";
 import { Validations } from "../../consts/validationRules.js";
 import styles from '../ProfileCard/profileCard.module.css'
-import moment from "moment";
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 import dayjs from "dayjs";
 import {cleanUpValues} from "../../helpers/bodyHelper.js";
@@ -35,7 +34,6 @@ const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }
         else{
             notify(notificationTypes.error(), notificationText.editUserProfile.Fail())
         }
-
     };
 
     const fullNameParts = fullName.split(' ');
@@ -68,7 +66,7 @@ const ProfileEditForm = ({ email, fullName, birthDate, setEditing, setUserInfo }
             </div>
             <section>
                 <Title level={4}>Дата рождения:</Title>
-                <Form.Item name="birthDate" rules={Validations.birthDateValidationRules()}>
+                <Form.Item name="birthDate" rules={Validations.dateValidationRules()}>
                     <DatePicker
                         style={{ width: '100%' }}
                         locale={locale}
