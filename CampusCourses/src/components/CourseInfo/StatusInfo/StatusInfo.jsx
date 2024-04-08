@@ -2,7 +2,6 @@ import styles from "../StatusInfo/status.module.css";
 import {Button, Space, Typography} from "antd";
 import CourseStatusEditModal from "../../Modals/CourseStatusEditModal/CourseStatusEditModal.jsx";
 import {useState} from "react";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {getStatusStyle} from "../../../helpers/courseStatusStyle.js";
 import {getCourseStatus} from "../../../helpers/courseStatus.js";
 import {useDispatch, useSelector} from "react-redux";
@@ -14,12 +13,13 @@ import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
 import {currentCourseRoles} from "../../../consts/currentCourseRoles.js";
 import {setCurrentCourseUserRole} from "../../../actions/currentCourseUserRoleAction.js";
+import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 
 const {Text} = Typography
 const StatusInfo = ()=>{
     const [loading, setLoading] = useState(false)
     const [isModalOpen, setModalOpen] = useState(false)
-    const { courseInfo, updateCourseInfo } = useCourse();
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo)
     const {courseId} = useParams()
     const {notify} = useNotification()
     const dispatch = useDispatch()
@@ -37,7 +37,7 @@ const StatusInfo = ()=>{
             setLoading(false);
             if (response.status === 200){
                 notify(notificationTypes.success(), notificationText.signUp.Success())
-                updateCourseInfo(courseId)
+                dispatch(getCourseInfoAction(courseId))
                 dispatch(setCurrentCourseUserRole(currentCourseRoles.student()))
             }
             else{

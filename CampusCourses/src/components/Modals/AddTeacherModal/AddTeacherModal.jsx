@@ -1,20 +1,21 @@
 import {Button, Modal, Select} from "antd";
 import {useEffect, useState} from "react";
 import {postAddTeacher} from "../../../API/Course/postAddTeacher.js";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {getUsers} from "../../../API/Users/getUsers.js";
 import {useParams} from "react-router-dom";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
+import {useDispatch} from "react-redux";
+import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 
 const AddTeacherModal = ({ isModalOpen, setModalOpen }) => {
-    const { updateCourseInfo } = useCourse();
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
     const [teacher, setTeacher] = useState('');
     const { courseId } = useParams();
     const { notify } = useNotification();
+    const dispatch = useDispatch()
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -47,7 +48,7 @@ const AddTeacherModal = ({ isModalOpen, setModalOpen }) => {
             if (response) {
                 notify(notificationTypes.success(), notificationText.addTeacher.Success());
                 setModalOpen(false);
-                updateCourseInfo(courseId);
+                dispatch(getCourseInfoAction(courseId));
             } else {
                 notify(notificationTypes.error(), notificationText.addTeacher.Fail());
             }

@@ -1,9 +1,9 @@
 import HeaderSection from "../components/Header/Header.jsx";
 import {Outlet} from 'react-router-dom'
-import {CourseProvider} from "../providers/CourseProvider.jsx";
 import {NotificationProvider} from "../providers/NotificationProvider.jsx";
 import {Provider} from "react-redux";
 import store from "../store.js";
+import ProtectedRoute from "../providers/ProtectedRoute.jsx";
 
 function Layout() {
 
@@ -11,10 +11,8 @@ function Layout() {
         <>
             <Provider store={store}>
                 <NotificationProvider>
-                    <CourseProvider>
-                        <HeaderSection/>
-                        <Outlet/>
-                    </CourseProvider>
+                    <HeaderSection/>
+                    <Outlet/>
                 </NotificationProvider>
             </Provider>
         </>

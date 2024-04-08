@@ -9,13 +9,17 @@ import {Link, useNavigate} from "react-router-dom";
 import {routes} from "../../consts/routes.js";
 import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
+import {setEmail} from "../../actions/emailAction.js";
+import {useDispatch} from "react-redux";
+import {setAuth} from "../../actions/authorizationAction.js";
 
-const {Title} = Typography;
+const {Title, Text} = Typography;
 export const LoginForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const {notify} = useNotification();
     const navigate = useNavigate()
+    const dispatch = useDispatch()
 
     const onFinish = async (values) => {
         setLoading(true);
@@ -24,6 +28,7 @@ export const LoginForm = () => {
         setTimeout(() => {
             if(data){
                 localStorage.setItem('token', data.token)
+                dispatch(setAuth(true))
                 notify(notificationTypes.success(), notificationText.login.Success())
                 navigate(routes.root())
             }
@@ -53,7 +58,7 @@ export const LoginForm = () => {
                         <Button type='primary' htmlType='submit' loading={loading}>Войти</Button>
                     </Flex>
                     <Flex className={styles.textContainer}>
-                        <p>Ещё нет аккаунта? <Link to={routes.registration()}>Зарегестрироваться</Link></p>
+                        <Text>Ещё нет аккаунта? <Link to={routes.registration()}>Зарегестрироваться</Link></Text>
                     </Flex>
                 </Form>
             </Card>

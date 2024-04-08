@@ -9,42 +9,46 @@ import {postLogout} from "../../API/User/postLogout.js";
 import {setRoles} from "../../actions/rolesActions.js";
 import {useDispatch, useSelector} from 'react-redux';
 import {setEmail} from "../../actions/emailAction.js";
+import {setAuth} from "../../actions/authorizationAction.js";
+
 const {Header} = Layout;
 
 const HeaderSection = () => {
-    const [profile, setProfile] = useState(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
     const roles = useSelector(state => state.roles.roles);
+    const email = useSelector(state => state.email.email);
+    const isAuth = useSelector(state => state.isAuth.isAuth)
 
     useEffect(() => {
         const fetchData = async () => {
-            try {
+            if(isAuth){
                 const rolesData = await getRoles();
-                const profileData = await getProfile();
-                setProfile(profileData);
+                const profileInfo = await getProfile()
+                dispatch(setEmail(profileInfo.email))
                 dispatch(setRoles(rolesData));
-                dispatch(setEmail(profileData.email));
-            } catch (error) {
-                console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
-    }, [dispatch, location]);
+    }, [location]);
 
     const logout = async () => {
-        await postLogout();
+        let response = await postLogout();
         setTimeout(() => {
-            navigate(routes.login());
+            if (response.status === 200) {
+                dispatch(setAuth(false))
+                localStorage.clear()
+                navigate(routes.login());
+            }
         }, 500)
     };
 
     const generateMenuItems = () => {
 
         let menuItems = [{key: 'main', label: 'Главная'}];
-        if (roles && profile) {
+        if (isAuth && roles && email) {
             menuItems.push({key: 'groupOgCourses', label: 'Группы курсов'});
             if (roles.isStudent) {
                 menuItems.push({key: 'studentCourses', label: 'Мои курсы'});
@@ -53,7 +57,7 @@ const HeaderSection = () => {
                 menuItems.push({key: 'teachingCourses', label: 'Преподаваемые курсы'});
             }
             menuItems.push(
-                {key: 'profile', label: `${profile.email}`, style: {marginLeft: 'auto'}},
+                {key: 'profile', label: `${email}`, style: {marginLeft: 'auto'}},
                 {key: 'logout', label: 'Выйти', danger: true, onClick: logout}
             );
         } else {

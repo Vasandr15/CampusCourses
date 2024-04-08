@@ -5,13 +5,14 @@ import DeleteGroupModal from "../Modals/DeleteGroupModal/DeleteGroupModal.jsx";
 import EditGroupModal from "../Modals/EditGroupModal/EditGroupModal.jsx";
 import { useNavigate } from "react-router-dom";
 import { routes } from "../../consts/routes.js";
-import {connect} from "react-redux";
+import {useSelector} from "react-redux";
 
 const { Text } = Typography;
 
-const GroupOfCourses = ({ id, name, updateGroups, roles, setGroupName }) => {
+const GroupOfCourses = ({ id, name, updateGroups }) => {
     const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const roles = useSelector(state => state.roles.roles)
     const navigate = useNavigate();
 
     const handleEditButtonClick = (e) => {
@@ -33,7 +34,7 @@ const GroupOfCourses = ({ id, name, updateGroups, roles, setGroupName }) => {
             <Card style={{ marginBottom: '10px'}} hoverable onClick={handleOnClick}>
                 <Flex  align={"baseline"}>
                     <Text>{name}</Text>
-                    {roles.isAdmin && (
+                    {roles && roles.isAdmin && (
                         <Space style={{marginLeft: 'auto'}}>
                             <Button onClick={handleEditButtonClick} className={styles.editBtn}>Редактировать</Button>
                             <Button onClick={handleDeleteButtonClick} danger>Удалить</Button>
@@ -47,8 +48,5 @@ const GroupOfCourses = ({ id, name, updateGroups, roles, setGroupName }) => {
     )
 }
 
-const mapStateToProps = (state) => ({
-    roles: state.roles.roles
-});
 
-export default connect(mapStateToProps) (GroupOfCourses);
+export default GroupOfCourses;

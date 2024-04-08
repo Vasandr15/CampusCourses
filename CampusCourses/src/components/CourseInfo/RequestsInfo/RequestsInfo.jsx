@@ -1,9 +1,9 @@
 import {Typography, Space} from "antd";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
+import {useSelector} from "react-redux";
 
 const {Text} = Typography
 const RequestsInfo = () => {
-    const { courseInfo } = useCourse();
+    const  courseInfo  = useSelector(state => state.courseInfo.courseInfo);
 
 
     return (

@@ -1,29 +1,32 @@
 import { Button, Modal, Radio, Space } from "antd";
 import {useEffect, useState} from "react";
 import {postChangeCourseStatus} from "../../../API/Course/postChangeCourseStatus.js";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
 import {courseStatus} from "../../../consts/CourseStatus.js";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
+import {useDispatch, useSelector} from "react-redux";
+import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 
 const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
-    const { courseInfo, updateCourseInfo } = useCourse();
+    const  courseInfo = useSelector(state => state.courseInfo.courseInfo);
     const [newStatus, setNewStatus] = useState(courseInfo.status);
     const {courseId} = useParams()
     const {notify} = useNotification()
+    const dispatch = useDispatch()
 
     const handleOk = async () => {
-        let response = await postChangeCourseStatus(newStatus, courseId);
-        if (response){
-            setModalOpen(false)
-            updateCourseInfo(courseId)
-            notify(notificationTypes.success(),notificationText.editCourseStatus.Success() )
-        }
-        else{
-            notify(notificationTypes.error(), notificationText.editCourseStatus.Fail())
-            setNewStatus(courseInfo.status)
+        if( courseInfo.status !== newStatus){
+            let response = await postChangeCourseStatus(newStatus, courseId);
+            if (response){
+                setModalOpen(false)
+                dispatch(getCourseInfoAction(courseId))
+                notify(notificationTypes.success(),notificationText.editCourseStatus.Success() )
+            }
+            else{
+                notify(notificationTypes.error(), notificationText.editCourseStatus.Fail())
+            }
         }
     };
     useEffect(() => {

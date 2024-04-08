@@ -4,19 +4,20 @@ import { studentMarks } from "../../../consts/StudentMarks.js";
 import { studentMarksRu } from "../../../consts/StudentMarksRu.js";
 import { postChangeStudentMark } from "../../../API/Course/postChangeStudentMark.js";
 import { getMarkType } from "../../../helpers/getMarkType.js";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useParams} from "react-router-dom";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
+import {useDispatch} from "react-redux";
+import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 
 const { Text } = Typography;
 
 const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark, markType }) => {
     const [newMark, setMark] = useState(currentMark);
-    const {updateCourseInfo } = useCourse();
     const {courseId} = useParams()
     const {notify} = useNotification()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setMark(currentMark);
@@ -32,7 +33,7 @@ const EditStudentMarkModal = ({ isModalOpen, setModalOpen, name, id, currentMark
         if (response) {
             notify(notificationTypes.success(), notificationText.editStudentMark.Success())
             setModalOpen(false);
-            updateCourseInfo(courseId)
+            dispatch(getCourseInfoAction(courseId))
         } else {
             notify(notificationTypes.error(), notificationText.editStudentMark.Fail())
         }

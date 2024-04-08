@@ -6,17 +6,18 @@ import {getRoles} from '../../API/Users/getRoles.js';
 import {useEffect, useState} from 'react';
 import CreateGroupModal from "../../components/Modals/CreateGroupModal/CreateGroupModal.jsx";
 import {getGroupsOfCourses} from "../../API/Group/getGroupsOfCourses.js";
-import {connect} from "react-redux";
+import {connect, useSelector} from "react-redux";
 import {useNotification} from "../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
 
 const {Title} = Typography;
 
-const GroupsOfCoursesPage = ({roles}) => {
+const GroupsOfCoursesPage = () => {
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
     const [groups, setGroups] = useState([]);
-    const {notify} = useNotification()
+    const notify = useNotification()
+    const roles = useSelector(state => state.roles.roles)
 
     useEffect(() => {
         fetchGroups();
@@ -36,7 +37,7 @@ const GroupsOfCoursesPage = ({roles}) => {
         if (updatedGroups) {
             setGroups(updatedGroups);
         } else {
-            // Notify or handle error
+            notify(notificationTypes.error(), notificationText.updateGroups.Fail())
         }
     };
 
@@ -48,7 +49,7 @@ const GroupsOfCoursesPage = ({roles}) => {
         <>
             <Card className={styles.groupCard}>
                 <Title>Группы курсов</Title>
-                {roles.isAdmin && (
+                {roles && roles.isAdmin && (
                     <Flex style={{justifyContent: 'center'}}>
                         <Button type="primary" style={{width: '100%'}} onClick={showCreateModal}>Создать
                             группу<PlusOutlined/></Button>
@@ -64,8 +65,4 @@ const GroupsOfCoursesPage = ({roles}) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    roles: state.roles.roles
-});
-
-export default connect(mapStateToProps)(GroupsOfCoursesPage);
+export default GroupsOfCoursesPage;

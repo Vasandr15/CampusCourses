@@ -1,10 +1,10 @@
 import {Tabs} from "antd";
 import Teachers from "./Teachers/Teachers.jsx";
 import Students from "./Students/Students.jsx";
-import {useCourse} from "../../providers/CourseProvider.jsx";
+import {useSelector} from "react-redux";
 
 const CourseUsers = () =>{
-    const { courseInfo } = useCourse();
+    const  courseInfo  = useSelector(state => state.courseInfo.courseInfo);
 
     const tabsItems = [
         {label: 'Преподаватели', key: 'teachers', children: <Teachers teachers={courseInfo.teachers}/> },

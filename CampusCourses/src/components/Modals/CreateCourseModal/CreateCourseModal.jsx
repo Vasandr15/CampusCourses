@@ -10,6 +10,7 @@ import {semestersRu} from "../../../consts/SemestersRu.js";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
+import RichTextEditor from "../../RichTextEditor/RichTextEditor.jsx";
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {
@@ -93,15 +94,15 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
                     <Form.Item name="semester" label="Семестр">
                         <Radio.Group>
                             <Radio value={semesters.autumn()}>{semestersRu.autumn()}</Radio>
-                            <Radio value={semesters.spring()}>{semestersRu.autumn()}</Radio>
+                            <Radio value={semesters.spring()}>{semestersRu.spring()}</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Space>
                 <Form.Item name="requirements" label="Требования">
-                    <ReactQuill theme='snow' />
+                    <RichTextEditor />
                 </Form.Item>
                 <Form.Item name="annotations" label="Аннотации">
-                    <ReactQuill theme='snow' />
+                    <RichTextEditor />
                 </Form.Item>
                 <Form.Item name="mainTeacherId" label="Оновной преподаватель курса">
                     <Select showSearch

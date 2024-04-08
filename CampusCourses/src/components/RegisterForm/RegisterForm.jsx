@@ -13,12 +13,15 @@ import {DATE_FORMAT} from "../../consts/strings.js";
 import {useNotification} from "../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
+import {setAuth} from "../../actions/authorizationAction.js";
+import {useDispatch} from "react-redux";
 
 const {Title} = Typography;
 export const RegisterForm = () => {
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     const {notify} = useNotification()
 
     const onFinish = async (values) => {
@@ -30,6 +33,7 @@ export const RegisterForm = () => {
             setLoading(false);
             if(data){
                 localStorage.setItem('token', data.token)
+                dispatch(setAuth(true))
                 notify(notificationTypes.success(), notificationText.registration.Success())
                 navigate(routes.root())
             }

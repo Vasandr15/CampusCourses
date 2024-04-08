@@ -3,19 +3,22 @@ import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import { putChangeRequirementsAndAnnotations } from "../../../API/Course/putChangeRequirementsAndAnnotations.js";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
+import {useDispatch, useSelector} from "react-redux";
+import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
+import {useParams} from "react-router-dom";
 
 const { Text } = Typography;
 
 const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
-    const { courseInfo, updateCourseInfo } = useCourse();
+    const courseInfo= useSelector(state => state.courseInfo.courseInfo);
     const [newRequirements, setNewRequirements] = useState(courseInfo.requirements);
     const [newAnnotations, setNewAnnotations] = useState(courseInfo.annotations);
-    const {courseId} = useCourse()
+    const {courseId} = useParams()
     const {notify} = useNotification()
+    const dispatch = useDispatch()
 
     useEffect(() => {
         setNewRequirements(courseInfo.requirements);
@@ -30,7 +33,7 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
         let response = await putChangeRequirementsAndAnnotations(newRequirements, newAnnotations, courseId);
         if (response) {
             setModalOpen(false);
-            updateCourseInfo(courseId)
+            dispatch(getCourseInfoAction(courseId))
             notify(notificationTypes.success(), notificationText.editRequirementsAndAnnotations.Success())
         } else {
             notify(notificationTypes.error(), notificationText.editRequirementsAndAnnotations.Fail())

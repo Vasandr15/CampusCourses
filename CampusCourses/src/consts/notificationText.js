@@ -67,5 +67,8 @@ export const notificationText = {
     },
     pageLoading: {
         Fail: () => "Не удалось загрузить данные на странице"
+    },
+    updateGroups: {
+        Fail: () => "Не удалось обновить группы курсов"
     }
 }

@@ -16,7 +16,7 @@ export const cleanUpValues = (values) => {
     delete values.surname;
     delete values.middleName;
 
-
+    console.log(values.birthDate)
     let birthDate = new Date(values.birthDate.toISOString());
     birthDate.setDate(birthDate.getDate())
     values.birthDate = birthDate.toISOString();

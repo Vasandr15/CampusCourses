@@ -13,7 +13,7 @@ import {notificationText} from "../../consts/notificationText.js";
 const ProfileCard = () => {
     const [userInfo, setUserInfo] = useState(null);
     const [editing, setEditing] = useState(false);
-    const [setEditedUserInfo] = useState({});
+    const [editedUserInfo, setEditedUserInfo] = useState({});
     const {notify} = useNotification()
 
     useEffect(() => {

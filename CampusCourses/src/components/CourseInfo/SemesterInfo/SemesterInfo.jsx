@@ -1,11 +1,11 @@
 import {Col, Row, Space, Typography} from "antd";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import {getCourseYear} from "../../../helpers/courseYear.js";
 import {getCourseSemester} from "../../../helpers/courseSemester.js";
+import { useSelector} from "react-redux";
 
 const {Text} = Typography
 const SemesterInfo = () =>{
-    const { courseInfo } = useCourse();
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo)
 
     return(
         <Row>

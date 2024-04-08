@@ -1,3 +1,3 @@
 export const getCourseYear = (year) =>{
-    return `${year} - ${year + 1}`
+    return `${year}-${year + 1}`
 }

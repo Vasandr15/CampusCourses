@@ -2,17 +2,16 @@ import { Button, DatePicker, Form, Input, Modal, Radio, Select, Space } from "an
 import { useEffect, useState } from "react";
 import NumericInput from "../../NumericInput/NumericInput.jsx";
 import ReactQuill from "react-quill";
-import 'react-quill/dist/quill.snow.css'
 import {semesters} from "../../../consts/Semesters.js";
 import {semestersRu} from "../../../consts/SemestersRu.js";
-import {useCourse} from "../../../providers/CourseProvider.jsx";
 import locale from 'antd/es/date-picker/locale/ru_RU.js';
 import moment from 'moment';
 import {YEAR_FORMAT} from "../../../consts/strings.js";
+import {useSelector} from "react-redux";
 
 
 const CreateCourseModal = ({ setIsModalOpen, isModalOpen }) => {
-    const { courseInfo, updateCourse } = useCourse();
+    const { courseInfo, updateCourse } = useSelector(state => state.courseInfo.courseInfo);
     const [loading, setLoading] = useState(false);
     const [form] = Form.useForm();
     const [maximumStudentsCount, setMaximumStudentsCount] = useState('');
@@ -75,7 +74,7 @@ const CreateCourseModal = ({ setIsModalOpen, isModalOpen }) => {
                     <Form.Item name="semester" label="Семестр">
                         <Radio.Group>
                             <Radio value={semesters.autumn()}>{semestersRu.autumn()}</Radio>
-                            <Radio value={semesters.spring()}>{semestersRu.autumn()}</Radio>
+                            <Radio value={semesters.spring()}>{semestersRu.spring()}</Radio>
                         </Radio.Group>
                     </Form.Item>
                 </Space>
