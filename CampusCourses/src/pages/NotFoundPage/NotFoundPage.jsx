@@ -4,6 +4,8 @@ import {useNavigate} from "react-router-dom";
 import {routes} from "../../consts/routes.js";
 const NotFoundPage = () => {
     const navigate = useNavigate()
+
+
     return(
         <>
             <Result

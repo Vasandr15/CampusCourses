@@ -9,7 +9,6 @@ import {postLogout} from "../../API/User/postLogout.js";
 import {setRoles} from "../../actions/rolesActions.js";
 import {useDispatch, useSelector} from 'react-redux';
 import {setEmail} from "../../actions/emailAction.js";
-import {setAuth} from "../../actions/authorizationAction.js";
 
 const {Header} = Layout;
 
@@ -38,7 +37,6 @@ const HeaderSection = () => {
         let response = await postLogout();
         setTimeout(() => {
             if (response.status === 200) {
-                dispatch(setAuth(false))
                 localStorage.clear()
                 navigate(routes.login());
             }

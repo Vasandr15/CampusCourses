@@ -9,9 +9,10 @@ import {semestersRu} from "../../../consts/SemestersRu.js";
 import {useNotification} from "../../../providers/NotificationProvider.jsx";
 import {notificationTypes} from "../../../consts/notificationTypes.js";
 import {notificationText} from "../../../consts/notificationText.js";
-import RichTextEditor from "../../RichTextEditor/RichTextEditor.jsx";
 import dayjs from "dayjs";
 import {Validations} from "../../../consts/validationRules.js";
+import ReactQuill from "react-quill";
+import 'react-quill/dist/quill.snow.css'
 
 
 const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) => {
@@ -24,6 +25,8 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
     const handleMaximumStudentsCountChange = (value) => {
         setMaximumStudentsCount(value);
     };
+
+
     const onFinish =  async (values) => {
         values.startYear = values.startYear.$y
         console.log(values);
@@ -102,10 +105,10 @@ const CreateCourseModal = ({id, isModalOpen, setIsModalOpen, updateCourses }) =>
                     </Form.Item>
                 </Space>
                 <Form.Item name="requirements" label="Требования" rules={Validations.courseValidation()}>
-                    <RichTextEditor />
+                    <ReactQuill theme={"snow"} />
                 </Form.Item>
                 <Form.Item name="annotations" label="Аннотации" rules={Validations.courseValidation()}>
-                    <RichTextEditor />
+                    <ReactQuill theme={"snow"} />
                 </Form.Item>
                 <Form.Item name="mainTeacherId" label="Оновной преподаватель курса" rules={Validations.courseValidation()}>
                     <Select showSearch

@@ -11,7 +11,7 @@ import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 
 const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
     const  courseInfo = useSelector(state => state.courseInfo.courseInfo);
-    const [newStatus, setNewStatus] = useState(courseInfo.status);
+    const [newStatus, setNewStatus] = useState(courseInfo?.status);
     const {courseId} = useParams()
     const {notify} = useNotification()
     const dispatch = useDispatch()
@@ -30,8 +30,8 @@ const CourseStatusEditModal = ({ isModalOpen, setModalOpen}) => {
         }
     };
     useEffect(() => {
-        setNewStatus(courseInfo.status);
-    }, [courseInfo.status]);
+        setNewStatus(courseInfo?.status);
+    }, [courseInfo]);
     const handleCancel = () => {
         setModalOpen(false);
         setNewStatus(courseInfo.status)

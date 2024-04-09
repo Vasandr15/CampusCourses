@@ -5,17 +5,28 @@ import NotificationLabel from "./Notifications/NotificationLabel.jsx";
 import Notifications from "./Notifications/Notifications.jsx";
 import {useSelector} from "react-redux";
 
-const CourseRequirements = () =>{
+const CourseRequirements = () => {
 
-    const  courseInfo = useSelector(state => state.courseInfo.courseInfo);
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo);
 
     const tabsItems = [
-        {label: "Требования", key: 'requirements', children: <Requirements requirements={courseInfo.requirements}/> },
-        {label: "Аннотации", key: 'annotations', children: <Annotations annotations={courseInfo.annotations}/> },
-        {label: <NotificationLabel notifications={courseInfo.notifications}/>, key: 'notifications',
-            children:<Notifications notifications={courseInfo.notifications}/> }]
+        {
+            label: "Требования",
+            key: 'requirements',
+            children: <Requirements requirements={courseInfo ? courseInfo.requirements : ""}/>
+        },
+        {
+            label: "Аннотации",
+            key: 'annotations',
+            children: <Annotations annotations={courseInfo ? courseInfo.annotations : ""}/>
+        },
+        {
+            label: <NotificationLabel notifications={courseInfo ? courseInfo.notifications : ""}/>,
+            key: 'notifications',
+            children: <Notifications notifications={courseInfo ? courseInfo.notifications : ""}/>
+        }]
 
-    return(
+    return (
         <Tabs centered items={tabsItems}></Tabs>
     )
 }

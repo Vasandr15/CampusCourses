@@ -1,15 +1,17 @@
-import {Typography, Space} from "antd";
+import {Typography, Space, Skeleton} from "antd";
 import {useSelector} from "react-redux";
 
 const {Text} = Typography
 const RequestsInfo = () => {
-    const  courseInfo  = useSelector(state => state.courseInfo.courseInfo);
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo);
+    const isLoading = useSelector(state => state.isLoading.isLoading);
 
 
     return (
         <Space direction={"vertical"}>
             <Text strong>Заявок на рассмотрении:</Text>
-            <Text>{courseInfo.studentsInQueueCount}</Text>
+            {isLoading || !courseInfo ? <Skeleton.Input style={{width: 200}} active/> :
+                <Text>{courseInfo.studentsInQueueCount}</Text>}
         </Space>
     )
 }

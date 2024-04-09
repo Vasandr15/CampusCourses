@@ -1,28 +1,38 @@
-import {Col, Row, Space, Typography} from "antd";
-import {getCourseYear} from "../../../helpers/courseYear.js";
-import {getCourseSemester} from "../../../helpers/courseSemester.js";
-import { useSelector} from "react-redux";
+import { Col, Row, Skeleton, Space, Typography } from "antd";
+import { getCourseYear } from "../../../helpers/courseYear.js";
+import { getCourseSemester } from "../../../helpers/courseSemester.js";
+import { useSelector } from "react-redux";
 
-const {Text} = Typography
-const SemesterInfo = () =>{
-    const courseInfo = useSelector(state => state.courseInfo.courseInfo)
+const { Text } = Typography;
 
-    return(
+const SemesterInfo = () => {
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo);
+    const isLoading = useSelector(state => state.isLoading.isLoading);
+
+    return (
         <Row>
             <Col md={12}>
-                <Space direction={"vertical"}>
+                <Space direction="vertical">
                     <Text strong>Учебный год:</Text>
-                    <Text>{getCourseYear(courseInfo.startYear)}</Text>
+                    {isLoading || !courseInfo ? (
+                        <Skeleton.Input style={{ width: 200 }} active />
+                    ) : (
+                        <Text>{courseInfo?.startYear && getCourseYear(courseInfo.startYear)}</Text>
+                    )}
                 </Space>
             </Col>
             <Col md={12}>
-                <Space direction={"vertical"}>
+                <Space direction="vertical">
                     <Text strong>Семестр:</Text>
-                    <Text>{getCourseSemester(courseInfo.semester)}</Text>
+                    {isLoading || !courseInfo ? (
+                        <Skeleton.Input style={{ width: 200 }} active />
+                    ) : (
+                        <Text>{courseInfo?.semester && getCourseSemester(courseInfo.semester)}</Text>
+                    )}
                 </Space>
             </Col>
         </Row>
-    )
-}
+    );
+};
 
 export default SemesterInfo;

@@ -41,12 +41,12 @@ export const router = createBrowserRouter([
                         element: <CoursesPage />
                     },
                     {
-                        path: routes.teaching(),
-                        element: <TeachingCourses />
-                    },
-                    {
                         path: routes.course(),
                         element: <CoursePage />
+                    },
+                    {
+                        path: routes.teaching(),
+                        element: <TeachingCourses />
                     },
                 ]
             },

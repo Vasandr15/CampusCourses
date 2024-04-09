@@ -14,16 +14,16 @@ const { Text } = Typography;
 
 const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
     const courseInfo= useSelector(state => state.courseInfo.courseInfo);
-    const [newRequirements, setNewRequirements] = useState(courseInfo.requirements);
-    const [newAnnotations, setNewAnnotations] = useState(courseInfo.annotations);
+    const [newRequirements, setNewRequirements] = useState();
+    const [newAnnotations, setNewAnnotations] = useState();
     const {courseId} = useParams()
     const {notify} = useNotification()
     const dispatch = useDispatch()
 
     useEffect(() => {
-        setNewRequirements(courseInfo.requirements);
-        setNewAnnotations(courseInfo.annotations);
-    }, [isModalOpen, courseInfo.requirements, courseInfo.annotations]);
+        setNewRequirements(courseInfo ? courseInfo.requirements : '');
+        setNewAnnotations(courseInfo ? courseInfo.annotations : '');
+    }, [isModalOpen, courseInfo]);
 
     const handleCancel = () => {
         setModalOpen(false);
