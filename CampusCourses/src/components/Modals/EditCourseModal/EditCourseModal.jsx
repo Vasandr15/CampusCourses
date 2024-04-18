@@ -16,6 +16,7 @@ import {notificationText} from "../../../consts/notificationText.js";
 import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 import {useParams} from "react-router-dom";
 import {Validations} from "../../../consts/validationRules.js";
+import {ToolBar} from "../../../consts/CustomToolbar.js";
 
 
 const CreateCourseModal = ({ setIsModalOpen, isModalOpen }) => {
@@ -68,7 +69,14 @@ const CreateCourseModal = ({ setIsModalOpen, isModalOpen }) => {
 
     const handleCancel = () => {
         setIsModalOpen(false);
-        form.resetFields()
+        form.setFieldsValue({
+            name: courseInfo.name,
+            startYear: moment( new Date(courseInfo.startYear, 0)),
+            maximumStudentsCount: courseInfo.maximumStudentsCount,
+            semester: courseInfo.semester,
+            requirements: courseInfo.requirements,
+            annotations: courseInfo.annotations
+        });
     };
 
     const footer = [
@@ -101,10 +109,10 @@ const CreateCourseModal = ({ setIsModalOpen, isModalOpen }) => {
                     </Form.Item>
                 </Space>
                 <Form.Item name="requirements" label="Требования" rules={Validations.courseValidation()}>
-                    <ReactQuill theme='snow' />
+                    <ReactQuill modules={{toolbar: ToolBar}} theme='snow' />
                 </Form.Item>
                 <Form.Item name="annotations" label="Аннотации" rules={Validations.courseValidation()}>
-                    <ReactQuill theme='snow' />
+                    <ReactQuill modules={{toolbar: ToolBar}} theme='snow' />
                 </Form.Item>
             </Form>
         </Modal>

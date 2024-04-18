@@ -17,6 +17,7 @@ import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
 import {getCourseInfoAction} from "../../actions/getCourseInfoAction.js";
 import {setLoading} from "../../actions/loadCourse.js";
+import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
 const {Title} = Typography;
 
@@ -26,6 +27,7 @@ const CoursePage = () => {
     const dispatch = useDispatch()
     const email = useSelector(state => state.email.email)
     const roles = useSelector(state => state.roles.roles)
+    const notFound = useSelector(state => state.notFound.notFound)
     const currentCourseRole = useSelector(state => state.currentCourseRole.currentCourseRole)
     const isLoading = useSelector(state => state.isLoading.isLoading)
     const {courseId} = useParams();
@@ -61,15 +63,17 @@ const CoursePage = () => {
         }
     };
 
-
+    if(notFound){
+        return <NotFoundPage/>
+    }
     return (
         <>
             <div className={styles.cardContainer}>
                 <Card className={styles.card}>
                     {!courseInfo || isLoading ? <Skeleton.Input style={{width: 200}} active/> : <Title>{courseInfo.name}</Title>}
-                    <Space className={styles.info}>
+                    <Space wrap className={styles.info}>
                         <Title level={4}>Основные данные курса</Title>
-                        {((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student()) ||
+                        {((roles && roles.isAdmin) ||
                             currentCourseRole === currentCourseRoles.teacher() || currentCourseRole === currentCourseRoles.mainTeacher()) && (
                             <Button onClick={onEditClick}>Редактировать</Button>
                         )}

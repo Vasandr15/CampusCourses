@@ -12,6 +12,7 @@ import {notificationTypes} from "../../consts/notificationTypes.js";
 import {notificationText} from "../../consts/notificationText.js";
 import {getGroupName} from "../../helpers/getGroupName.js";
 import LoadingList from "../../components/LoadingList/LoadingList.jsx";
+import NotFoundPage from "../NotFoundPage/NotFoundPage.jsx";
 
 const {Title} = Typography
 const CoursesPage = () => {
@@ -21,35 +22,47 @@ const CoursesPage = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [loading, setLoading] = useState(false)
     const {notify} = useNotification()
+    const [notFound, setNotFound] = useState(false )
     const roles = useSelector(state => state.roles.roles)
 
     const showModal = () => {
         setIsModalOpen(true);
     };
     const fetchCourses = async () => {
-        setLoading(true)
-        const courses = await getCourses(groupId);
-        const name = await getGroupName(groupId)
-        setGroupName(name)
-        if (courses) {
-            setCourses(courses)
-            setLoading(false)
-        } else {
-            notify(notificationTypes.error(), notificationText.pageLoading.Fail())
+        try {
+            setLoading(true);
+            const courses = await getCourses(groupId);
+            const name = await getGroupName(groupId);
+            setGroupName(name);
+            if (courses) {
+                setCourses(courses);
+                setLoading(false);
+            } else {
+                notify(notificationTypes.error(), notificationText.pageLoading.Fail());
+                setLoading(false);
+            }
+        } catch (error) {
+            setLoading(false);
+            setNotFound(true)
         }
-    }
+    };
+
 
     useEffect(() => {
         fetchCourses()
     }, []);
+
+    if (notFound){
+        return <NotFoundPage/>
+    }
 
     return (
         <>
             <Flex className={styles.cardContainer}>
                 <Card className={styles.card}>
                     <Space direction="horizontal" align={"center"}>
-                        <Title>Группа -</Title>
-                        {loading ? <Skeleton.Input style={{width: 200}} active/> : <Title>{groupName}</Title>}
+                        <Title>Группа - {loading ? <Skeleton.Input style={{width: 200}} active/> : <Title>{groupName}</Title>} </Title>
+
                     </Space>
                     <Flex style={{justifyContent: 'center'}}>
                         {(roles && roles.isAdmin) && (

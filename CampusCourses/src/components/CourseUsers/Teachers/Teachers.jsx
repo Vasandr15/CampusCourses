@@ -21,8 +21,7 @@ const Teachers = ({teachers}) => {
     return (
         <>
             {
-                ((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student())
-                    || currentCourseRole === currentCourseRoles.mainTeacher()) && (
+                ((roles && roles.isAdmin) || (currentCourseRole === currentCourseRoles.mainTeacher())) && (
                     <Space>
                         <Button type="primary" onClick={handleClick}>Добавить преподавателя</Button>
                     </Space>
@@ -34,8 +33,8 @@ const Teachers = ({teachers}) => {
                     <List dataSource={teachers}
                           renderItem={(teacher) => (
                               <List.Item>
-                                  <Space direction={'vertical'} size={"small"}>
-                                      <Space direction={'horizontal'} align={'baseline'}>
+                                  <Space wrap direction={'vertical'} size={"small"}>
+                                      <Space wrap direction={'horizontal'} align={'baseline'}>
                                           <Text strong>{teacher.name}</Text> {teacher.isMain ?
                                           <Tag color={'rgba(46,157,56,0.98)'}>основной</Tag> : null}
                                       </Space>

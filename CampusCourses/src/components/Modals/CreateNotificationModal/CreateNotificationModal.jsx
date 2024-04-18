@@ -32,6 +32,7 @@ const CreateNotificationModal = ({isModalOpen, setModalOpen}) =>{
 
     const handleCancel = () =>{
         setNotification('')
+        setIsImportant(false)
         setModalOpen(false)
     }
 
@@ -47,7 +48,7 @@ const CreateNotificationModal = ({isModalOpen, setModalOpen}) =>{
         <Modal title={"Создание уведомления"} open={isModalOpen} footer={footer} onCancel={handleCancel}>
             <Space direction={"horizontal"} style={{marginBottom: 10}}>
                 <Text>Важное уведомление</Text>
-                <Switch onChange={(checked) =>  setIsImportant(checked)}/>
+                <Switch value={isImportant} onChange={(checked) =>  setIsImportant(checked)}/>
             </Space>
             <TextArea showCount maxLength={100} onChange={setNewNotification} value={notification} className={styles.textArea}/>
         </Modal>

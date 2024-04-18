@@ -12,19 +12,18 @@ const ListItem = ({course}) => {
     const navigate = useNavigate()
     return (
         <Card hoverable title={course.name} style={{width: '100%'}} onClick={() => navigate(routes.course(course.id))}>
-            <Row>
-                <Col>
-                    <Space direction="vertical">
+            <Space wrap style={{justifyContent: "space-between", display: "flex"}}>
+
+                    <Space wrap direction="vertical">
                         <Text>Учебный год - {getCourseYear(course.startYear)}</Text>
                         <Text>Семестр - {getCourseSemester(course.semester)}</Text>
                         <Text type="secondary">Мест всего - {course.maximumStudentsCount}</Text>
                         <Text type="secondary">Мест свободно - {course.remainingSlotsCount}</Text>
                     </Space>
-                </Col>
-                <Col style={{marginLeft: 'auto'}}>
+                <Space style={{marginLeft: 'auto'}}>
                     <Text strong style={{color: getStatusStyle(course.status)}}>{getCourseStatus(course.status)}</Text>
-                </Col>
-            </Row>
+                </Space>
+            </Space>
         </Card>
     );
 };

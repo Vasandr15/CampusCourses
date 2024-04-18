@@ -16,6 +16,7 @@ export const getCourseInfoAction = (courseId) => {
         } catch (error) {
             console.log(error);
             handleAxiosError(error)
+            throw error;
         }
     };
 };

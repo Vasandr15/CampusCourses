@@ -18,16 +18,19 @@ const Notifications = ({notifications}) => {
         setModalOpen(true)
     }
 
+    console.log(currentCourseRole)
+
     return (
         <>
             {
-                ((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student()) ||
-                    (currentCourseRole === (currentCourseRoles.teacher() || currentCourseRoles.mainTeacher())))
+                ((roles && roles.isAdmin) || (currentCourseRole === currentCourseRoles.mainTeacher()) ||
+                currentCourseRole === currentCourseRoles.teacher())
                 && (
                     <Space style={{marginBottom: '5px'}}>
                         <Button type="primary" onClick={handleClick}>Добавить уведомление</Button>
                     </Space>
                 )
+
             }
             <div className={styles.container}>
                 {isLoading ? <LoadingList length={5} rows={2}/> :

@@ -12,7 +12,7 @@ import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
 const AddTeacherModal = ({ isModalOpen, setModalOpen }) => {
     const [loading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
-    const [teacher, setTeacher] = useState('');
+    const [teacher, setTeacher] = useState(null);
     const { courseId } = useParams();
     const { notify } = useNotification();
     const dispatch = useDispatch()
@@ -60,7 +60,7 @@ const AddTeacherModal = ({ isModalOpen, setModalOpen }) => {
     };
 
     const handleCancel = () => {
-        setTeacher('');
+        setTeacher(null);
         setModalOpen(false);
     };
 
@@ -82,6 +82,7 @@ const AddTeacherModal = ({ isModalOpen, setModalOpen }) => {
                 }
                 options={users}
                 onChange={setTeacher}
+                value={teacher}
             />
         </Modal>
     );

@@ -2,9 +2,9 @@ import axios from "axios";
 import {baseURL} from "../../consts/baseURL.js";
 import {handleAxiosError} from "../../helpers/handleAxiosError.js";
 
-export const putChangeRequirementsAndAnnotations = async (requirements, annotations, courseId) =>{
+export const putChangeRequirementsAndAnnotations = async (data, courseId) =>{
     try{
-       let data = {"requirements" : requirements, "annotations" : annotations}
+
         let response = await axios
             .put(`${baseURL}/courses/${courseId}/requirements-and-annotations`, data,
                 {

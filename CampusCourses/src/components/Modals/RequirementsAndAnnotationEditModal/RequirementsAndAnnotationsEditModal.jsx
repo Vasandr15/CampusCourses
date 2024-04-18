@@ -1,36 +1,44 @@
-import { Button, Modal, Space, Typography } from "antd";
+import {Button, Form, Modal, Space, Typography} from "antd";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css';
 import { useState, useEffect } from "react";
 import { putChangeRequirementsAndAnnotations } from "../../../API/Course/putChangeRequirementsAndAnnotations.js";
-import {useNotification} from "../../../providers/NotificationProvider.jsx";
-import {notificationTypes} from "../../../consts/notificationTypes.js";
-import {notificationText} from "../../../consts/notificationText.js";
-import {useDispatch, useSelector} from "react-redux";
-import {getCourseInfoAction} from "../../../actions/getCourseInfoAction.js";
-import {useParams} from "react-router-dom";
+import { useNotification } from "../../../providers/NotificationProvider.jsx";
+import { notificationTypes } from "../../../consts/notificationTypes.js";
+import { notificationText } from "../../../consts/notificationText.js";
+import { useDispatch, useSelector } from "react-redux";
+import { getCourseInfoAction } from "../../../actions/getCourseInfoAction.js";
+import { useParams } from "react-router-dom";
+import {ToolBar} from "../../../consts/CustomToolbar.js";
 
 const { Text } = Typography;
 
-const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
-    const courseInfo= useSelector(state => state.courseInfo.courseInfo);
-    const [newRequirements, setNewRequirements] = useState();
-    const [newAnnotations, setNewAnnotations] = useState();
-    const {courseId} = useParams()
-    const {notify} = useNotification()
-    const dispatch = useDispatch()
+const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen }) => {
+    const courseInfo = useSelector(state => state.courseInfo.courseInfo);
+    const { courseId } = useParams();
+    const { notify } = useNotification();
+    const [loading, setLoading] = useState(false);
+    const [form] = Form.useForm();
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        setNewRequirements(courseInfo ? courseInfo.requirements : '');
-        setNewAnnotations(courseInfo ? courseInfo.annotations : '');
-    }, [isModalOpen, courseInfo]);
+        if (courseInfo) {
+            form.setFieldsValue({
+                requirements: courseInfo.requirements,
+                annotations: courseInfo.annotations
+            });
+        }
+    }, [courseInfo, form]);
 
     const handleCancel = () => {
         setModalOpen(false);
+        form.setFieldsValue({
+            requirements: courseInfo.requirements,
+            annotations: courseInfo.annotations
+        });
     }
-
-    const handleOk = async () => {
-        let response = await putChangeRequirementsAndAnnotations(newRequirements, newAnnotations, courseId);
+    const onFinish = async (values) =>{
+        let response = await putChangeRequirementsAndAnnotations(values, courseId);
         if (response) {
             setModalOpen(false);
             dispatch(getCourseInfoAction(courseId))
@@ -40,6 +48,10 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
         }
     }
 
+    const handleOk = async () => {
+        form.submit();
+    }
+
     const footer = [
         <Button key={"back"} onClick={handleCancel}>Отменить</Button>,
         <Button type={"primary"} key={"submit"} onClick={handleOk}>Сохранить</Button>
@@ -47,12 +59,14 @@ const RequirementsAndAnnotationsEditModal = ({ isModalOpen, setModalOpen}) => {
 
     return (
         <Modal width={750} title={'Редактирование курса'} open={isModalOpen} footer={footer} onCancel={handleCancel}>
-            <Space direction={"vertical"}>
-                <Text>Требования</Text>
-                <ReactQuill theme={"snow"} onChange={setNewRequirements} value={newRequirements} />
-                <Text>Аннотации</Text>
-                <ReactQuill theme={"snow"} onChange={setNewAnnotations} value={newAnnotations} />
-            </Space>
+            <Form name="courseEdit" form={form} onFinish={onFinish} layout="vertical">
+                <Form.Item name={"requirements"} label={"Требования"}>
+                    <ReactQuill modules={{toolbar: ToolBar}} theme={"snow"}/>
+                </Form.Item>
+                <Form.Item name={"annotations"} label={"Аннотации"}>
+                    <ReactQuill modules={{toolbar: ToolBar}} theme={"snow"} />
+                </Form.Item>
+            </Form>
         </Modal>
     );
 }

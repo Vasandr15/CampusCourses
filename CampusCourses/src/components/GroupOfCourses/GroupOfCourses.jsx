@@ -32,15 +32,17 @@ const GroupOfCourses = ({ id, name, updateGroups }) => {
     return (
         <>
             <Card style={{ marginBottom: '10px'}} hoverable onClick={handleOnClick}>
-                <Flex  align={"baseline"}>
-                    <Text>{name}</Text>
+                <Space wrap  align={"baseline"} style={{display: "flex", justifyContent: "space-between"}}>
+                    <Space style={{display: "flex"}}>
+                        <Text>{name}</Text>
+                    </Space>
                     {roles && roles.isAdmin && (
-                        <Space style={{marginLeft: 'auto'}}>
+                        <Space wrap style={{marginLeft: 'auto'}}>
                             <Button onClick={handleEditButtonClick} className={styles.editBtn}>Редактировать</Button>
                             <Button onClick={handleDeleteButtonClick} danger>Удалить</Button>
                         </Space>
                     )}
-                </Flex>
+                </Space>
             </Card>
             <DeleteGroupModal id={id} setIsModalOpen={setIsDeleteModalOpen} isModalOpen={isDeleteModalOpen} courseName={name} updateGroups={updateGroups} />
             <EditGroupModal id={id} setIsModalOpen={setIsEditModalOpen} isModalOpen={isEditModalOpen} courseName={name} updateGroups={updateGroups} />

@@ -16,5 +16,6 @@ export const getCourse = async (id) =>{
     catch (error){
         console.log(error)
         handleAxiosError(error)
+        throw error;
     }
 }

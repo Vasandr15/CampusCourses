@@ -49,7 +49,7 @@ const StatusInfo = () => {
 
     return (
         <>
-            <Space className={styles.status}>
+            <Space wrap className={styles.status}>
                 <Space direction="vertical">
                     <Text strong>Статус курса: </Text>
                     {isLoading || !courseInfo ? (
@@ -61,7 +61,9 @@ const StatusInfo = () => {
                     )}
                 </Space>
                 <Space direction="horizontal">
-                    {roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student() && (
+                    {((roles && roles.isAdmin && currentCourseRole !== currentCourseRoles.student())
+                        || currentCourseRole === currentCourseRoles.mainTeacher() || currentCourseRole === currentCourseRoles.teacher()
+                    ) && (
                         <Button onClick={onEditClick}>Изменить статус</Button>
                     )}
                     {currentCourseRole === currentCourseRoles.none() &&

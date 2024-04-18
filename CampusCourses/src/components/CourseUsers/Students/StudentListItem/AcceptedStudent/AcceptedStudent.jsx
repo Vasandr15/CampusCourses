@@ -23,7 +23,7 @@ const AcceptedStudent = ({ id, name, finalResult, midtermResult }) => {
 
     return (
         <>
-            <Space className={styles.listItem}>
+            <Space className={styles.listItem} wrap>
                 {
                     (midtermResult  ) && (
                         <Space direction="horizontal" wrap>
